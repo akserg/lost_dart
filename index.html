@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Lost dart : bla-bla-bla" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Lost dart</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/akserg/lost_dart">View on GitHub</a>
+
+          <h1 id="project_title">Lost dart</h1>
+          <h2 id="project_tagline">bla-bla-bla</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/akserg/lost_dart/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/akserg/lost_dart/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Lost Dart</h1>
+
+<p>Lost Dart is implementation of Inversion of Control container written on Dart language.</p>
+
+<p>It manages dependency injection and dependency management. Its aim is to make wide range of Dart applications easier to:</p>
+
+<ul>
+<li>Manage source code;</li>
+<li>Encouraging code modularisation;</li>
+<li>Separations of concerns;</li>
+<li>Good unit testing practices.</li>
+</ul><p>Main class in Lost Dart is Container, exposes set of methods using to manage configurations and resolve instance by identifier. The configuration consists of object definitions implemented either in-code or like JSON objects (not implemented yet). Configuration wires the application together.  </p>
+
+<div class="highlight"><pre><span class="c1">// Create IoC container</span>
+<span class="nx">Container</span> <span class="nx">container</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Container</span><span class="p">();</span>
+
+<span class="c1">// Create configuration</span>
+<span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
+  <span class="c1">// Add Baz</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
+  <span class="p">})</span>
+  <span class="c1">// Add Bar</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="c1">// Find baz</span>
+    <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+    <span class="c1">// Create Bar with constructor injection</span>
+    <span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">(</span><span class="nx">baz</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">bar</span><span class="p">;</span>
+  <span class="p">})</span>
+  <span class="c1">// Add Foo</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="c1">// Create Foo</span>
+    <span class="nx">Foo</span> <span class="nx">foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
+    <span class="c1">// Find bar</span>
+    <span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">);</span>
+    <span class="c1">// Assign bar to foo - property injection</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">bar</span> <span class="o">=</span> <span class="nx">bar</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">foo</span><span class="p">;</span>
+  <span class="p">});</span>
+
+<span class="c1">// Add configuration</span>
+<span class="nx">container</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="c1">// Resolve baz</span>
+<span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+</pre></div>
+
+<p>Container is not a singleton. Depends on development strategy or business requirements developer might implement set of configurations having relations any kind of complexity.</p>
+
+<h2>The core concepts of Lost Dart by examples</h2>
+
+<h3>Instantiation</h3>
+
+<p>A simple example of using the Lost Dart is that to construct an instance of an object. </p>
+
+<div class="highlight"><pre><span class="c1">// Somewhere in developing library</span>
+<span class="kr">class</span> <span class="nx">Baz</span><span class="p">{</span>
+  <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>
+
+  <span class="nx">Baz</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">""</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="c1">// Create IoC container</span>
+<span class="nx">Container</span> <span class="nx">container</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Container</span><span class="p">();</span>
+
+<span class="c1">// Configuration</span>
+<span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
+  <span class="c1">// Add Baz</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">();</span>
+  <span class="p">});</span>
+
+<span class="c1">// Add configuration</span>
+<span class="nx">container</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="c1">// Resolve baz</span>
+<span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+
+<span class="c1">// Test result</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s2">""</span><span class="p">);</span>
+</pre></div>
+
+<h3>Constructor injection: Literals arguments</h3>
+
+<p>Literal values are set in the configuration:</p>
+
+<div class="highlight"><pre><span class="c1">// Configuration</span>
+<span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
+  <span class="c1">// Add Baz</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="s2">"Test"</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="c1">// …</span>
+
+<span class="c1">// Test result</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s2">"Test"</span><span class="p">);</span>
+</pre></div>
+
+<h3>Constructor injection: Using a map of named literals</h3>
+
+<p>Developers might specify map of named literals in second argument to be used in class instantiation as constructor arguments: </p>
+
+<div class="highlight"><pre><span class="nx">Baz</span> <span class="nx">baz1</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"name"</span><span class="o">:</span><span class="s2">"Test"</span><span class="p">});</span>
+</pre></div>
+
+<h3>Constructor injection: Dependencies</h3>
+
+<p>A tree of dependencies are instantiated and injected using the configuration:</p>
+
+<div class="highlight"><pre><span class="c1">// application code</span>
+<span class="kr">class</span> <span class="nx">Baz</span><span class="p">{</span>
+  <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="kr">int</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
+
+  <span class="nx">Baz</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">"99"</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">Bar</span><span class="p">{</span>
+  <span class="nx">Baz</span> <span class="nx">baz</span><span class="p">;</span>
+  <span class="nx">Bar</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">baz</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Create IoC container</span>
+<span class="nx">Container</span> <span class="nx">container</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Container</span><span class="p">();</span>
+
+<span class="c1">// Create configuration</span>
+<span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
+  <span class="c1">// Add Baz</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
+  <span class="p">})</span>
+  <span class="c1">// Add Bar</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="c1">// Find baz</span>
+    <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+    <span class="c1">// Create Bar with constructor injection</span>
+    <span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">(</span><span class="nx">baz</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">bar</span><span class="p">;</span>
+  <span class="p">});</span>
+
+<span class="c1">// Create IoC container</span>
+<span class="nx">Container</span> <span class="nx">container</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Container</span><span class="p">();</span>
+
+<span class="c1">// Add configuration</span>
+<span class="nx">container</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="c1">// Resolve baz</span>
+<span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+
+<span class="c1">// Test result of baz</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s2">""</span><span class="p">);</span>
+
+<span class="c1">// Resolve bar</span>
+<span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">);</span>
+
+<span class="c1">// Test result of bar</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">bar</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">bar</span><span class="p">.</span><span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s2">""</span><span class="p">);</span>
+</pre></div>
+
+<p>As you seen in previous example to use references to other instances of objects we may ask container to resolve reference on other instance:</p>
+
+<div class="highlight"><pre><span class="c1">// Create configuration</span>
+<span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
+  <span class="c1">// Add Bar</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="c1">// Find baz</span>
+  <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+  <span class="c1">// Create Bar with constructor injection</span>
+  <span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">(</span><span class="nx">baz</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">bar</span><span class="p">;</span>
+<span class="p">})</span>
+</pre></div>
+
+<h3>Property injection: Literal values</h3>
+
+<p>Literal values are set in the configuration:</p>
+
+<div class="highlight"><pre><span class="c1">// application code</span>
+<span class="kr">class</span> <span class="nx">Baz</span><span class="p">{</span>
+  <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="kr">int</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
+
+  <span class="nx">Baz</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">"99"</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="c1">// Create configuration</span>
+<span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
+  <span class="c1">// Add Baz</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
+    <span class="nx">Baz</span><span class="p">.</span><span class="nx">number</span> <span class="o">=</span> <span class="mi">33</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">baz</span><span class="p">;</span>
+  <span class="p">});</span>
+
+
+<span class="c1">// Create IoC container</span>
+<span class="nx">Container</span> <span class="nx">container</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Container</span><span class="p">();</span>
+<span class="c1">// Add configuration</span>
+<span class="nx">container</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="c1">// Resolve baz</span>
+<span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"name"</span><span class="o">:</span><span class="s2">"123"</span><span class="p">});</span>
+
+<span class="c1">// Test result</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s2">"123"</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">number</span> <span class="o">==</span> <span class="mi">33</span><span class="p">);</span>
+</pre></div>
+
+<h3>Property injection: Dependencies</h3>
+
+<p>A tree of dependencies are instantiated and injected using the configuration:</p>
+
+<div class="highlight"><pre><span class="c1">// application code</span>
+<span class="kr">class</span> <span class="nx">Baz</span><span class="p">{</span>
+  <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="kr">int</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
+
+  <span class="nx">Baz</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">"99"</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="nx">Class</span> <span class="nx">Bar</span><span class="p">{</span>
+  <span class="nx">Baz</span> <span class="nx">baz</span><span class="p">;</span>
+
+  <span class="nx">Bar</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// Create configuration</span>
+<span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
+  <span class="c1">// Add Baz</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
+  <span class="p">})</span>
+  <span class="c1">// Add Bar</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">();</span>
+    <span class="nx">bar</span><span class="p">.</span><span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">bar</span><span class="p">;</span>
+  <span class="p">});</span>
+
+
+<span class="c1">// Create IoC container</span>
+<span class="nx">Container</span> <span class="nx">container</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Container</span><span class="p">();</span>
+
+<span class="c1">// Add configuration</span>
+<span class="nx">container</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="c1">// Resolve baz</span>
+<span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+
+<span class="c1">// Resolve bar</span>
+<span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">);</span>
+
+<span class="c1">// Test result</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">baz</span> <span class="o">==</span> <span class="nx">baz</span><span class="p">);</span>
+</pre></div>
+
+<h3>Object scopes</h3>
+
+<p>Lost Dart supports two scopes: singleton and prototype. The first is used by default and does not need to be explicitly specified in the configuration. Objects that use the singleton scope will only be instantiated once.</p>
+
+<div class="highlight"><pre><span class="c1">//application code</span>
+<span class="kr">class</span> <span class="nx">Baz</span><span class="p">{</span>
+  <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="kr">int</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
+
+  <span class="nx">Baz</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">"99"</span><span class="p">]);</span>
+<span class="p">}</span>
+
+
+<span class="c1">// Create configuration</span>
+<span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
+  <span class="c1">// Add Baz</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+    <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">();</span>
+    <span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nx">baz</span><span class="p">;</span>
+  <span class="p">},</span> <span class="nx">Scope</span><span class="p">.</span><span class="nx">PROTOTYPE</span><span class="p">)</span>
+  <span class="c1">// Add Bar</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">();</span>
+  <span class="p">}</span>
+
+<span class="c1">// Create IoC container</span>
+<span class="nx">Container</span> <span class="nx">container</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Container</span><span class="p">();</span>
+
+<span class="c1">// Add configuration</span>
+<span class="nx">container</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="c1">// Resolve baz - "prototype" scope.</span>
+<span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+<span class="nx">Baz</span> <span class="nx">baz1</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
+<span class="c1">// Test prototype result</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span> <span class="o">!=</span> <span class="nx">baz1</span><span class="p">);</span>
+
+<span class="c1">// Resolve bar – "singleton" scope</span>
+<span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">);</span>
+<span class="nx">Bar</span> <span class="nx">bar1</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">);</span>
+<span class="c1">// Test prototype result</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">bar</span> <span class="o">==</span> <span class="nx">bar1</span><span class="p">);</span>
+</pre></div>
+
+<h3>Factory methods</h3>
+
+<p>Factory methods can be used to generate injected values</p>
+
+<div class="highlight"><pre><span class="nx">Not</span> <span class="nx">implemented</span> <span class="nx">yet</span>
+</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Lost dart maintained by <a href="https://github.com/akserg">akserg</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
