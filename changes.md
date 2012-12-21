@@ -1,6 +1,8 @@
 Lost Dart Changes
 ==============
 
+** 'run.sh' has been added into test folder.
+
 **November 27, 2012
 
 * Just to following Google naming conventions requirements the name of repository and library has been changed from 'lostdart' to 'lost_dart'.
