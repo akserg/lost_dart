@@ -22,7 +22,7 @@ class ObjectFactoryTestGroup extends TestGroup {
     Container container = new Container();
     //
     InCodeObjectDefinition test = new InCodeObjectDefinition();
-    test.instanceFunction = fun(Container c, Map params) {
+    test.instanceFunction = (Container c, Map params) {
       return new Baz("baz-test");
     };
     //
@@ -38,7 +38,7 @@ class ObjectFactoryTestGroup extends TestGroup {
     Container container = new Container();
     //
     InCodeObjectDefinition test = new InCodeObjectDefinition();
-    test.instanceFunction = fun(Container c, Map params) {
+    test.instanceFunction = (Container c, Map params) {
       return new Baz(params['name']);
     };
     //

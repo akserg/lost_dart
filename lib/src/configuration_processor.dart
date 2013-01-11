@@ -32,7 +32,7 @@ abstract class ConfigurationProcessor {
    */
   void addAll(List<Configuration> configs) {
     assert(configs != null);
-    configs.forEach(fun(Configuration config) => _process(config));
+    configs.forEach((Configuration config) => _process(config));
   }
 
   /**

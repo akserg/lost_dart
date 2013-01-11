@@ -1,7 +1,9 @@
 Lost Dart Changes
 ==============
 
-** 'run.sh' has been added into test folder.
+**January 11, 2013
+
+** Migrate project code to follow Dart SDK version 0.2.10.1_r16761.
 
 **November 27, 2012
 

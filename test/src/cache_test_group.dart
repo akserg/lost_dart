@@ -43,7 +43,7 @@ class CacheTestGroup extends TestGroup {
     Container container = new Container();
     //
     InCodeObjectDefinition test = new InCodeObjectDefinition();
-    test.instanceFunction = fun(Container c, Map params) {
+    test.instanceFunction = (Container c, Map params) {
       return new Baz("baz-test");
     };
     container.configuration.cache.add("first", test);
@@ -60,7 +60,7 @@ class CacheTestGroup extends TestGroup {
     Container container = new Container();
     //
     InCodeObjectDefinition test = new InCodeObjectDefinition();
-    test.instanceFunction = fun(Container c, Map params) {
+    test.instanceFunction = (Container c, Map params) {
       return new Baz(params['name']);
     };
     container.configuration.cache.add("first", test);
@@ -77,7 +77,7 @@ class CacheTestGroup extends TestGroup {
     Container container = new Container();
     //
     InCodeObjectDefinition test = new InCodeObjectDefinition();
-    test.instanceFunction = fun(Container c, Map params) {
+    test.instanceFunction = (Container c, Map params) {
       return new Baz(params['name']);
     };
     container.configuration.cache.add("first", test);

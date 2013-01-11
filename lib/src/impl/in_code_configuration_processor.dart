@@ -18,7 +18,7 @@ class InCodeConfigurationProcessor extends ConfigurationProcessor {
    * Process each configuration and generate ObjectDefinition per item.
    */
   void _process(InCodeConfiguration config) {
-    config.objects.forEach(fun(String id, _InstanceObject value) {
+    config.objects.forEach((String id, _InstanceObject value) {
       // Pass through each object in configuration
       _InstanceObject instanceObject = value;
       // Create instance of empty InCodeObjectDefinition

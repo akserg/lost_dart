@@ -44,7 +44,7 @@ class DefaultContainerConfiguration extends ContainerConfiguration {
    */
   void addAll(List<Configuration> configs) {
     assert(configs != null);
-    configs.forEach(fun(Configuration config){
+    configs.forEach((Configuration config){
       add(config);
     });
   }

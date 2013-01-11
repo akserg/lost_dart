@@ -23,7 +23,7 @@ class ConfigurationTestGroup extends TestGroup {
    */
   void inCodeConfigurationAddObjectTest() {
     InCodeConfiguration config = new InCodeConfiguration();
-    config.add("id1", fun(Container c, Map params){
+    config.add("id1", (Container c, Map params){
       return new Baz();
     });
     //
@@ -35,7 +35,7 @@ class ConfigurationTestGroup extends TestGroup {
    */
   void inCodeConfigurationRemoveObjectTest() {
     InCodeConfiguration config = new InCodeConfiguration();
-    config.add("id1", fun(Container c, Map params){
+    config.add("id1", (Container c, Map params){
       return new Baz();
     });
     //
@@ -50,7 +50,7 @@ class ConfigurationTestGroup extends TestGroup {
     Container container = new Container();
     //
     InCodeConfiguration config = new InCodeConfiguration();
-    config.add("first", fun(Container c, Map params){
+    config.add("first", (Container c, Map params){
       return new Baz("baz-test");
     });
     container.configuration.add(config);
@@ -67,11 +67,11 @@ class ConfigurationTestGroup extends TestGroup {
     Container container = new Container();
     //
     InCodeConfiguration config = new InCodeConfiguration();
-    config.add("first", fun(Container c, Map params){
+    config.add("first", (Container c, Map params){
       return new Baz("baz-test");
     });
     InCodeConfiguration config2 = new InCodeConfiguration();
-    config.add("second", fun(Container c, Map params){
+    config.add("second", (Container c, Map params){
       return new Baz("baz-test 2");
     });
     container.configuration.addAll([config, config2]);

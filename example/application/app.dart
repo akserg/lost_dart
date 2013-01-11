@@ -29,18 +29,18 @@ void main() {
   // Create configuration
   Configuration config = new InCodeConfiguration()
     // Add Baz
-    ..add("baz", fun(Container container, Map params){
+    ..add("baz", (Container container, Map params){
       return new Baz(params['name']);
     })
     // Add Bar
-    ..add("bar", fun(Container container, Map params){
+    ..add("bar", (Container container, Map params){
       // Find baz
       Baz baz = container.resolve("baz");
       // Create Bar with constructor injection
       Bar bar = new Bar(baz);
       return bar;
     })
-    ..add("foo", fun(Container container, Map params){
+    ..add("foo", (Container container, Map params){
       // Create Foo
       Foo foo = new Foo();
       // Find bar
