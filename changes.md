@@ -1,6 +1,11 @@
 Lost Dart Changes
 ==============
 
+**January 13, 2013
+
+* Added reference on Browser Library. The lost_dart_test.html pointing now on new dart.js location.
+* Added test_runner.dart to run test execution from Dron.io Continuous Integration web site.
+
 **January 11, 2013
 
 ** Migrate project code to follow Dart SDK version 0.2.10.1_r16761.
