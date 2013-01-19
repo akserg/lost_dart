@@ -10,7 +10,7 @@ abstract class ConfigurationProcessor {
 
   /// Container Configuration
   ContainerConfiguration _configuration;
-  
+
   /// Return Container Configuration
   ContainerConfiguration get configuration => _configuration;
 

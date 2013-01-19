@@ -10,7 +10,7 @@ import 'package:lost_dart/lost_dart.dart';
 
 class Baz{
   String name;
-  
+
   Baz([this.name = '']);
 }
 
@@ -54,10 +54,10 @@ void main() {
   // Check what we have
   Baz baz = container.resolve("baz", {'name':'Test'});
   print("Baz name ${baz.name}");
-  
+
   Baz baz1 = container.resolve("baz");
   print("Baz1 name ${baz.name}");
-  
+
   Bar bar = container.resolve("bar");
   print("Baz in Bar name ${bar.baz.name}");
 }

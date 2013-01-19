@@ -10,14 +10,14 @@ class Cache {
   Map<String, ObjectDefinition> _objectDefinitions = {};
 
   ContainerConfiguration _configuration;
-  
+
   ContainerConfiguration get configuration => _configuration;
 
   /**
    * Create an instance of [Cache].
    */
   Cache(this._configuration);
-  
+
   /**
    * Add ObjectDefinition into cache by id.
    */
@@ -68,7 +68,7 @@ class Cache {
       throw new DefinitionNotFoundException("Object definition by '$id' was not found.");
     }
   }
-  
+
   /**
    * Clear object definition map.
    */

@@ -47,6 +47,6 @@ class _InstanceObject {
   String scope = Scope.SINGLETON;
   List positionalArguments;
   Map namedArguments;
-  
+
   _InstanceObject(this.instanceFunction, this.scope, this.positionalArguments, this.namedArguments);
 }

@@ -8,12 +8,12 @@ part of lost_dart;
  * [InCodeObjectDefinition].
  */
 class InCodeObjectFactory extends ObjectFactory {
-  
+
   /**
    * Create an instance of [InCodeObjectFactory].
    */
   InCodeObjectFactory(ContainerConfiguration configuration) : super(configuration);
-  
+
   /**
    * Create instance of object [id] based on information from [InCodeObjectDefinition].
    */

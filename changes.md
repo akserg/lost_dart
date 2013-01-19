@@ -1,6 +1,10 @@
 Lost Dart Changes
 ==============
 
+**January 19, 2013
+
+* Code cleaned and follow Dart SDK 0.2.10.1_r16761.
+
 **January 13, 2013
 
 * Added reference on Browser Library. The lost_dart_test.html pointing now on new dart.js location.

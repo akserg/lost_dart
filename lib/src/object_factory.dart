@@ -9,14 +9,14 @@ part of lost_dart;
 abstract class ObjectFactory {
 
   ContainerConfiguration _configuration;
-  
+
   ContainerConfiguration get configuration => _configuration;
 
   /**
    * Create an instance of [ObjectFactory].
    */
   ObjectFactory(this._configuration);
-  
+
   /**
    * Create instance of object [id] based on information from [ObjectDefinition].
    */

@@ -15,7 +15,7 @@ class ConfigurationTestGroup extends TestGroup {
     this.testList["InCodeConfiguration removeObject"] = inCodeConfigurationRemoveObjectTest;
     this.testList["Add Config"] = addConfigTest;
     this.testList["Add Configs"] = addConfigsTest;
-    
+
   }
 
   /**
@@ -29,7 +29,7 @@ class ConfigurationTestGroup extends TestGroup {
     //
     ut.expect(config.objects.containsKey("id1"), true);
   }
-  
+
   /**
    * Check in code configuration remove object.
    */
@@ -42,7 +42,7 @@ class ConfigurationTestGroup extends TestGroup {
     config.remove("id1");
     ut.expect(config.objects.containsKey("id1"), false);
   }
-  
+
   /**
    * Check add config method.
    */
@@ -59,7 +59,7 @@ class ConfigurationTestGroup extends TestGroup {
     ut.expect(baz != null, true);
     ut.expect(baz.name, ut.equals("baz-test"));
   }
-  
+
   /**
    * Check add configs method.
    */

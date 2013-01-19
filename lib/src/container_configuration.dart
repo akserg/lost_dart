@@ -4,17 +4,17 @@
 part of lost_dart;
 
 /**
- * This class manages container configuration and tight different parts of 
+ * This class manages container configuration and tight different parts of
  * IoC container in one place.
  */
 abstract class ContainerConfiguration {
-  
+
   /// Reference on Container
   Container _container;
-  
+
   /// Return [Container].
   Container get container => _container;
-  
+
   /**
    * Set new [Container]. It runs [_initialise] method to start initialization
    * process through meth
@@ -25,27 +25,27 @@ abstract class ContainerConfiguration {
     //
     _initialise();
   }
-  
+
   /**
    * Initialise container configuration
    */
   void _initialise();
-  
+
   /**
    * Add configuration into configuration list.
    */
   void add(Configuration config);
-  
+
   /**
    * Add list of configuration into configuration.
    */
   void addAll(List<Configuration> configs);
-  
+
   /**
    * Return Cache.
    */
   Cache get cache;
-  
+
   /**
    * Create instance of object [id] based on information from [ObjectDefinition].
    */

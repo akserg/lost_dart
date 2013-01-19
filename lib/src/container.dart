@@ -7,16 +7,16 @@ part of lost_dart;
  * IoC container.
  */
 class Container {
-  
+
   /// Container configuration
   ContainerConfiguration _configuration;
-  
+
   /// Return current container configuration
   ContainerConfiguration get configuration => _configuration;
-  
+
   /**
    *  Create an instance of Container.
-   *  If [ContainerConfiguration] not specified - 
+   *  If [ContainerConfiguration] not specified -
    */
   Container([this._configuration = null]) {
     if (_configuration == null) {
@@ -32,14 +32,14 @@ class Container {
   void add(Configuration config) {
     _configuration.add(config);
   }
-  
+
   /**
    * Add list of configuration into configuration.
    */
   void addAll(List<Configuration> configs) {
     _configuration.addAll(configs);
   }
-  
+
   /**
    * Find or create object by id.
    */

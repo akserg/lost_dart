@@ -4,16 +4,16 @@
 part of lost_dart;
 
 /**
- * Implementation of [ConfigurationProcessor] using to process 
+ * Implementation of [ConfigurationProcessor] using to process
  * [InCodeConfiguration].
  */
 class InCodeConfigurationProcessor extends ConfigurationProcessor {
-  
+
   /**
    * Create an instanbce of [InCodeConfigurationProcessor].
    */
   InCodeConfigurationProcessor(ContainerConfiguration configuration) : super(configuration);
-  
+
   /**
    * Process each configuration and generate ObjectDefinition per item.
    */
@@ -31,5 +31,5 @@ class InCodeConfigurationProcessor extends ConfigurationProcessor {
       configuration.cache.add(id, od);
     });
   }
-  
+
 }

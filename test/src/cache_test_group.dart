@@ -22,7 +22,7 @@ class CacheTestGroup extends TestGroup {
     Container container = new Container();
     ut.expect(container.configuration.cache != null, true);
   }
-  
+
   /**
    * Add and find object definition.
    */
@@ -35,7 +35,7 @@ class CacheTestGroup extends TestGroup {
     InCodeObjectDefinition test1 = container.configuration.cache.find("first");
     ut.expect(test1, ut.equals(test));
   }
-  
+
   /**
    * Resolve object.
    */
@@ -52,7 +52,7 @@ class CacheTestGroup extends TestGroup {
     ut.expect(baz != null, true);
     ut.expect(baz.name, ut.equals("baz-test"));
   }
-  
+
   /**
    * Resolve Object with params.
    */
@@ -69,7 +69,7 @@ class CacheTestGroup extends TestGroup {
     ut.expect(baz != null, true);
     ut.expect(baz.name, ut.equals("baz-test"));
   }
-  
+
   /**
    * Check clear method.
    */

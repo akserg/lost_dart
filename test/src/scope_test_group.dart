@@ -4,7 +4,7 @@
 part of lost_dart_test;
 
 /**
- * Test Scope values. 
+ * Test Scope values.
  */
 class ScopeTestGroup extends TestGroup {
 

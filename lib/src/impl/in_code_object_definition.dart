@@ -4,7 +4,7 @@
 part of lost_dart;
 
 /**
- * Type definition for function using in conjuction with 
+ * Type definition for function using in conjuction with
  * [InCodeObjectDefinition].
  */
 typedef Object InstanceFunction(Container c, Map params);
@@ -18,7 +18,7 @@ class InCodeObjectDefinition extends ObjectDefinition {
 
   /// Instance function
   InstanceFunction instanceFunction;
-  
+
   /// Named arguments using to pass arguments into InstanceFunction
   Map namedArguments;
 }

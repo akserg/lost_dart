@@ -5,7 +5,7 @@ part of lost_dart_test;
 
 class Baz{
   String name;
-  
+
   Baz([this.name = '']);
 }
 

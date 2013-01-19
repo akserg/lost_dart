@@ -30,7 +30,7 @@ class ObjectFactoryTestGroup extends TestGroup {
     ut.expect(baz != null, true);
     ut.expect(baz.name, ut.equals("baz-test"));
   }
-  
+
   /**
    * Create an object instance with parameters
    */
@@ -46,5 +46,5 @@ class ObjectFactoryTestGroup extends TestGroup {
     ut.expect(baz != null, true);
     ut.expect(baz.name, ut.equals("baz-test"));
   }
-    
+
 }

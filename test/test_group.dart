@@ -22,7 +22,7 @@ abstract class TestGroup {
   }
 
   /**
-   * Method to be implemented in extended classes to register tests. 
+   * Method to be implemented in extended classes to register tests.
    */
   void registerTests();
 }

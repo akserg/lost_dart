@@ -7,13 +7,13 @@ part of lost_dart;
  * Default implementation of ContainerConfiguration.
  */
 class DefaultContainerConfiguration extends ContainerConfiguration {
-  
+
   const String IN_CODE_CONFIGURATION = "InCodeConfiguration";
-  
+
   Map<String, ConfigurationProcessor> _configurationProcessor;
   Cache _cache;
   Map<String, ObjectFactory> _objectFactories;
-  
+
   /**
    * Initialise container configuration
    */
@@ -26,7 +26,7 @@ class DefaultContainerConfiguration extends ContainerConfiguration {
     _objectFactories = new Map<String, ObjectFactory>();
     _objectFactories[IN_CODE_CONFIGURATION] = new InCodeObjectFactory(this);
   }
-  
+
   /**
    * Add configuration into configuration list.
    */
@@ -38,7 +38,7 @@ class DefaultContainerConfiguration extends ContainerConfiguration {
       throw new UnknownConfigurationTypeException("Unknown configuration type '${config.toString()}");
     }
   }
-  
+
   /**
    * Add list of configuration into configuration.
    */
@@ -48,12 +48,12 @@ class DefaultContainerConfiguration extends ContainerConfiguration {
       add(config);
     });
   }
-  
+
   /**
    * Return Cache.
    */
   Cache get cache => _cache;
-  
+
   /**
    * Create instance of object [id] based on information from [ObjectDefinition].
    */

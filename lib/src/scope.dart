@@ -9,7 +9,7 @@ part of lost_dart;
 class Scope {
   static const String SINGLETON = "SINGLETON";
   static const String PROTOTYPE = "PROTOTYPE";
-  
+
   /**
    * Check is scope equals [SINGLETON] or [PROTOTYPE].
    */

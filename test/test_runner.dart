@@ -1,7 +1,7 @@
 //Copyright (C) 2012 Sergey Akopkokhyants. All Rights Reserved.
 //Author: akserg
 
-// Test runner usually starting from Dron.io Continuous Integration web site. 
+// Test runner usually starting from Dron.io Continuous Integration web site.
 
 library lost_dart_test;
 
