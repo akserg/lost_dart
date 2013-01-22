@@ -1,7 +1,7 @@
 //Copyright (C) 2012 Sergey Akopkokhyants. All Rights Reserved.
 //Author: akserg
 
-library lost_dart_test;
+-library lost_dart_test;
 
 import 'package:unittest/unittest.dart' as ut;
 
