@@ -2,6 +2,8 @@
 
 Lost Dart is implementation of Inversion of Control container written on Dart language.
 
+[![](https://drone.io/akserg/lost_dart/status.png)](https://drone.io/akserg/lost_dart/latest)
+
 It manages dependency injection and dependency management. Its aim is to make wide range of Dart applications easier to:
 * Manage source code;
 * Encouraging code modularisation;
