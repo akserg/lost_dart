@@ -1,6 +1,12 @@
 Lost Dart Changes
 ==============
 
+**January 22. 2013
+
+* Removed example folder with content.
+* Removed browser based test enviroument.
+* Prepared to CI tests on Drone.io
+
 **January 19, 2013
 
 * Code cleaned and follow Dart SDK 0.2.10.1_r16761.
