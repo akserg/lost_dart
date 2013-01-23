@@ -1,7 +1,11 @@
 Lost Dart Changes
 ==============
 
-**January 22. 2013
+**January 23, 2013
+
+* Migrate project code to follow Dart SDK version 0.3.1.1_r17328.
+
+**January 22, 2013
 
 * Removed example folder with content.
 * Removed browser based test enviroument.
