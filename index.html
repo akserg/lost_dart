@@ -35,10 +35,11 @@
           <p>Lost Dart is Inversion of Control Container implementation for Dart.</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/akserg">akserg</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <h2>Lost Dart</h2>
+        <h2>
+<a name="lost-dart" class="anchor" href="#lost-dart"><span class="octicon octicon-link"></span></a>Lost Dart</h2>
 
 <p>Lost Dart is implementation of Inversion of Control container written on Dart language.</p>
 
@@ -59,11 +60,11 @@
 <span class="c1">// Create configuration</span>
 <span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
   <span class="c1">// Add Baz</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
   <span class="p">})</span>
   <span class="c1">// Add Bar</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="c1">// Find baz</span>
     <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
     <span class="c1">// Create Bar with constructor injection</span>
@@ -71,7 +72,7 @@
     <span class="k">return</span> <span class="nx">bar</span><span class="p">;</span>
   <span class="p">})</span>
   <span class="c1">// Add Foo</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="c1">// Create Foo</span>
     <span class="nx">Foo</span> <span class="nx">foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
     <span class="c1">// Find bar</span>
@@ -90,7 +91,8 @@
 
 <p>Container is not a singleton. Depends on development strategy or business requirements developer might implement set of configurations having relations any kind of complexity.</p>
 
-<h3>Set up</h3>
+<h3>
+<a name="set-up" class="anchor" href="#set-up"><span class="octicon octicon-link"></span></a>Set up</h3>
 
 <p>Lost Dart is available under the lost_dart pub package. Simply add a dependency to your pubspec.yaml file:</p>
 
@@ -101,9 +103,11 @@
 
 <p>Then run pub install and you’ll have everything you need to get started.</p>
 
-<h2>The core concepts of Lost Dart by examples</h2>
+<h2>
+<a name="the-core-concepts-of-lost-dart-by-examples" class="anchor" href="#the-core-concepts-of-lost-dart-by-examples"><span class="octicon octicon-link"></span></a>The core concepts of Lost Dart by examples</h2>
 
-<h3>Instantiation</h3>
+<h3>
+<a name="instantiation" class="anchor" href="#instantiation"><span class="octicon octicon-link"></span></a>Instantiation</h3>
 
 <p>A simple example of using the Lost Dart is that to construct an instance of an object. </p>
 
@@ -120,7 +124,7 @@
 <span class="c1">// Configuration</span>
 <span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
   <span class="c1">// Add Baz</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">();</span>
   <span class="p">});</span>
 
@@ -135,14 +139,15 @@
 <span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s2">""</span><span class="p">);</span>
 </pre></div>
 
-<h3>Constructor injection: Literals arguments</h3>
+<h3>
+<a name="constructor-injection-literals-arguments" class="anchor" href="#constructor-injection-literals-arguments"><span class="octicon octicon-link"></span></a>Constructor injection: Literals arguments</h3>
 
 <p>Literal values are set in the configuration:</p>
 
 <div class="highlight"><pre><span class="c1">// Configuration</span>
 <span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
   <span class="c1">// Add Baz</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="s2">"Test"</span><span class="p">);</span>
   <span class="p">});</span>
 
@@ -152,14 +157,16 @@
 <span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s2">"Test"</span><span class="p">);</span>
 </pre></div>
 
-<h3>Constructor injection: Using a map of named literals</h3>
+<h3>
+<a name="constructor-injection-using-a-map-of-named-literals" class="anchor" href="#constructor-injection-using-a-map-of-named-literals"><span class="octicon octicon-link"></span></a>Constructor injection: Using a map of named literals</h3>
 
 <p>Developers might specify map of named literals in second argument to be used in class instantiation as constructor arguments: </p>
 
 <div class="highlight"><pre><span class="nx">Baz</span> <span class="nx">baz1</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"name"</span><span class="o">:</span><span class="s2">"Test"</span><span class="p">});</span>
 </pre></div>
 
-<h3>Constructor injection: Dependencies</h3>
+<h3>
+<a name="constructor-injection-dependencies" class="anchor" href="#constructor-injection-dependencies"><span class="octicon octicon-link"></span></a>Constructor injection: Dependencies</h3>
 
 <p>A tree of dependencies are instantiated and injected using the configuration:</p>
 
@@ -182,11 +189,11 @@
 <span class="c1">// Create configuration</span>
 <span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
   <span class="c1">// Add Baz</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
   <span class="p">})</span>
   <span class="c1">// Add Bar</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="c1">// Find baz</span>
     <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
     <span class="c1">// Create Bar with constructor injection</span>
@@ -220,7 +227,7 @@
 <div class="highlight"><pre><span class="c1">// Create configuration</span>
 <span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
   <span class="c1">// Add Bar</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
   <span class="c1">// Find baz</span>
   <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
   <span class="c1">// Create Bar with constructor injection</span>
@@ -229,7 +236,8 @@
 <span class="p">})</span>
 </pre></div>
 
-<h3>Property injection: Literal values</h3>
+<h3>
+<a name="property-injection-literal-values" class="anchor" href="#property-injection-literal-values"><span class="octicon octicon-link"></span></a>Property injection: Literal values</h3>
 
 <p>Literal values are set in the configuration:</p>
 
@@ -244,7 +252,7 @@
 <span class="c1">// Create configuration</span>
 <span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
   <span class="c1">// Add Baz</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
     <span class="nx">Baz</span><span class="p">.</span><span class="nx">number</span> <span class="o">=</span> <span class="mi">33</span><span class="p">;</span>
     <span class="k">return</span> <span class="nx">baz</span><span class="p">;</span>
@@ -264,7 +272,8 @@
 <span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">number</span> <span class="o">==</span> <span class="mi">33</span><span class="p">);</span>
 </pre></div>
 
-<h3>Property injection: Dependencies</h3>
+<h3>
+<a name="property-injection-dependencies" class="anchor" href="#property-injection-dependencies"><span class="octicon octicon-link"></span></a>Property injection: Dependencies</h3>
 
 <p>A tree of dependencies are instantiated and injected using the configuration:</p>
 
@@ -285,11 +294,11 @@
 <span class="c1">// Create configuration</span>
 <span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
   <span class="c1">// Add Baz</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
   <span class="p">})</span>
   <span class="c1">// Add Bar</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="nx">Bar</span> <span class="nx">bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">();</span>
     <span class="nx">bar</span><span class="p">.</span><span class="nx">baz</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">);</span>
     <span class="k">return</span> <span class="nx">bar</span><span class="p">;</span>
@@ -312,7 +321,8 @@
 <span class="nx">assert</span><span class="p">(</span><span class="nx">baz</span><span class="p">.</span><span class="nx">baz</span> <span class="o">==</span> <span class="nx">baz</span><span class="p">);</span>
 </pre></div>
 
-<h3>Object scopes</h3>
+<h3>
+<a name="object-scopes" class="anchor" href="#object-scopes"><span class="octicon octicon-link"></span></a>Object scopes</h3>
 
 <p>Lost Dart supports two scopes: singleton and prototype. The first is used by default and does not need to be explicitly specified in the configuration. Objects that use the singleton scope will only be instantiated once.</p>
 
@@ -328,13 +338,13 @@
 <span class="c1">// Create configuration</span>
 <span class="nx">Configuration</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InCodeConfiguration</span><span class="p">()</span>
   <span class="c1">// Add Baz</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">){</span>
     <span class="nx">Baz</span> <span class="nx">baz</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">();</span>
     <span class="nx">baz</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">params</span><span class="p">[</span><span class="s2">"name"</span><span class="p">];</span>
     <span class="k">return</span> <span class="nx">baz</span><span class="p">;</span>
   <span class="p">},</span> <span class="nx">Scope</span><span class="p">.</span><span class="nx">PROTOTYPE</span><span class="p">)</span>
   <span class="c1">// Add Bar</span>
-  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">..</span><span class="nx">add</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">,</span> <span class="p">(</span><span class="nx">Container</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">Map</span> <span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">();</span>
   <span class="p">}</span>
 
@@ -357,7 +367,8 @@
 <span class="nx">assert</span><span class="p">(</span><span class="nx">bar</span> <span class="o">==</span> <span class="nx">bar1</span><span class="p">);</span>
 </pre></div>
 
-<h3>Factory methods</h3>
+<h3>
+<a name="factory-methods" class="anchor" href="#factory-methods"><span class="octicon octicon-link"></span></a>Factory methods</h3>
 
 <p>Factory methods can be used to generate injected values</p>
 
