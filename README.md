@@ -19,11 +19,11 @@ Container container = new Container();
 // Create configuration
 Configuration config = new InCodeConfiguration()
   // Add Baz
-  ..add("baz", fun(Container container, Map params){
+  ..add("baz", (Container container, Map params){
     return new Baz(params["name"]);
   })
   // Add Bar
-  ..add("bar", fun(Container container, Map params){
+  ..add("bar", (Container container, Map params){
     // Find baz
     Baz baz = container.resolve("baz");
     // Create Bar with constructor injection
@@ -31,7 +31,7 @@ Configuration config = new InCodeConfiguration()
     return bar;
   })
   // Add Foo
-  ..add("foo", fun(Container container, Map params){
+  ..add("foo", (Container container, Map params){
     // Create Foo
     Foo foo = new Foo();
     // Find bar
@@ -81,7 +81,7 @@ Container container = new Container();
 // Configuration
 Configuration config = new InCodeConfiguration()
   // Add Baz
-  ..add("baz", fun(Container container, Map params){
+  ..add("baz", (Container container, Map params){
     return new Baz();
   });
 
@@ -104,7 +104,7 @@ Literal values are set in the configuration:
 // Configuration
 Configuration config = new InCodeConfiguration()
   // Add Baz
-  ..add("baz", fun(Container container, Map params){
+  ..add("baz", (Container container, Map params){
     return new Baz("Test");
   });
 
@@ -146,11 +146,11 @@ Container container = new Container();
 // Create configuration
 Configuration config = new InCodeConfiguration()
   // Add Baz
-  ..add("baz", fun(Container container, Map params){
+  ..add("baz", (Container container, Map params){
     return new Baz(params["name"]);
   })
   // Add Bar
-  ..add("bar", fun(Container container, Map params){
+  ..add("bar", (Container container, Map params){
     // Find baz
     Baz baz = container.resolve("baz");
     // Create Bar with constructor injection
@@ -185,7 +185,7 @@ As you seen in previous example to use references to other instances of objects 
 // Create configuration
 Configuration config = new InCodeConfiguration()
   // Add Bar
-  ..add("bar", fun(Container container, Map params){
+  ..add("bar", (Container container, Map params){
   // Find baz
   Baz baz = container.resolve("baz");
   // Create Bar with constructor injection
@@ -210,7 +210,7 @@ class Baz{
 // Create configuration
 Configuration config = new InCodeConfiguration()
   // Add Baz
-  ..add("baz", fun(Container container, Map params){
+  ..add("baz", (Container container, Map params){
     Baz baz = new Baz(params["name"]);
     Baz.number = 33;
     return baz;
@@ -252,11 +252,11 @@ Class Bar{
 // Create configuration
 Configuration config = new InCodeConfiguration()
   // Add Baz
-  ..add("baz", fun(Container container, Map params){
+  ..add("baz", (Container container, Map params){
     return new Baz(params["name"]);
   })
   // Add Bar
-  ..add("bar", fun(Container container, Map params){
+  ..add("bar", (Container container, Map params){
     Bar bar = new Bar();
     bar.baz = container.resolve("baz");
     return bar;
@@ -296,13 +296,13 @@ class Baz{
 // Create configuration
 Configuration config = new InCodeConfiguration()
   // Add Baz
-  ..add("baz", fun(Container container, Map params){
+  ..add("baz", (Container container, Map params){
     Baz baz = new Baz();
     baz.name = params["name"];
     return baz;
   }, Scope.PROTOTYPE)
   // Add Bar
-  ..add("bar", fun(Container container, Map params) {
+  ..add("bar", (Container container, Map params) {
     return new Bar();
   }
 

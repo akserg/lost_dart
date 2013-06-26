@@ -1,6 +1,12 @@
 Lost Dart Changes
 ==============
 
+** June 26, 2013
+
+* Implementation of DI based on JSON configuration.
+* Implemented JSONConfiguration, JSONConfigurationProcessor, JSONObjectDefinition, JSONObjectFactory.
+* DefaultContainerConfiguration and LostDart have been changed.
+
 ** June 20, 2013
 
 * Migrate project code to follow Dart SDK version 0.5.20.2_r24160. 

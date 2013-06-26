@@ -8,7 +8,8 @@ part of lost_dart;
  */
 class DefaultContainerConfiguration extends ContainerConfiguration {
 
-  const String IN_CODE_CONFIGURATION = "InCodeConfiguration";
+  static const String IN_CODE_CONFIGURATION = "InCodeConfiguration";
+  static const String JSON_CONFIGURATION = "JsonConfiguration";
 
   Map<String, ConfigurationProcessor> _configurationProcessor;
   Cache _cache;
@@ -20,11 +21,13 @@ class DefaultContainerConfiguration extends ContainerConfiguration {
   void _initialise() {
     _configurationProcessor = new Map<String, ConfigurationProcessor>();
     _configurationProcessor[IN_CODE_CONFIGURATION] = new InCodeConfigurationProcessor(this);
+    _configurationProcessor[JSON_CONFIGURATION] = new JSONConfigurationProcessor(this);
     //
     _cache = new Cache(this);
     //
     _objectFactories = new Map<String, ObjectFactory>();
     _objectFactories[IN_CODE_CONFIGURATION] = new InCodeObjectFactory(this);
+    _objectFactories[JSON_CONFIGURATION] = new JSONObjectFactory(this);
   }
 
   /**
@@ -32,7 +35,9 @@ class DefaultContainerConfiguration extends ContainerConfiguration {
    */
   void add(Configuration config) {
     assert(config != null);
-    if (config is InCodeConfiguration) {
+    if (config is JSONConfiguration) {
+      _configurationProcessor[JSON_CONFIGURATION]._process(config);
+    } else if (config is InCodeConfiguration) {
       _configurationProcessor[IN_CODE_CONFIGURATION]._process(config);
     } else {
       throw new UnknownConfigurationTypeException("Unknown configuration type '${config.toString()}");
@@ -60,6 +65,8 @@ class DefaultContainerConfiguration extends ContainerConfiguration {
   dynamic create(String id, ObjectDefinition od, [Map params = null]) {
     if (od is InCodeObjectDefinition) {
       return _objectFactories[IN_CODE_CONFIGURATION].create(id, od, params);
+    } else if (od is JSONObjectDefinition) {
+      return _objectFactories[JSON_CONFIGURATION].create(id, od, params);
     } else {
       throw new UnknownObjectDefinitionTypeException("Unknown type of ObjectDefinition: ${od.toString()}");
     }

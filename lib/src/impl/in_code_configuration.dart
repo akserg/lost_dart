@@ -11,6 +11,11 @@ class InCodeConfiguration extends Configuration {
   Map<String, _InstanceObject> _inConfigs = new Map<String, _InstanceObject>();
 
   /**
+   * Create an instance of InCodeConfiguration.
+   */
+  InCodeConfiguration();
+  
+  /**
    * Add caller into configuration.
    */
   void add(String id, InstanceFunction caller, [String scope = Scope.SINGLETON, List positionalArguments = null, Map namedArguments = null]) {
