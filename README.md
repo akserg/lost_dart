@@ -43,11 +43,14 @@ void main() {
   
   // Bind Baz
   container.bind(Baz);
+  container.bindAs("baz2");
   
   // Resolve baz by type
   Baz baz = container.get(Baz);
-  assert(baz != null);
+  Baz baz2 = container.getAs("baz");
+
   assert(baz.name == "");
+  assert(baz2.name == "");
 }
 </pre>
 
