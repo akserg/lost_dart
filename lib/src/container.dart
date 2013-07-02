@@ -1,49 +1,147 @@
-//Copyright (C) 2012 Sergey Akopkokhyants. All Rights Reserved.
+//Copyright (C) 2012-2013 Sergey Akopkokhyants. All Rights Reserved.
 //Author: akserg
 
 part of lost_dart;
 
 /**
- * IoC container.
+ * Dependency Injection container.
  */
 class Container {
-
-  /// Container configuration
-  ContainerConfiguration _configuration;
-
-  /// Return current container configuration
-  ContainerConfiguration get configuration => _configuration;
-
+  
+  /// Cache of definitions
+  final Map<String, Binder> _definitions = new Map<String, Binder>();
+  
+  /// ObjectFActory
+  final ObjectFactory _objectFactory = new ObjectFactory();
+  
   /**
-   *  Create an instance of Container.
-   *  If [ContainerConfiguration] not specified -
+   * Create new context with [ObjectFactory].
    */
-  Container([this._configuration = null]) {
-    if (_configuration == null) {
-      // Get default one
-      _configuration = new DefaultContainerConfiguration();
+  Container();
+  
+  /**
+   * Use [id] for binding new injection.
+   */
+  Binder bindAs(String id) {
+    assert(id != null);
+    if (isExistsAs(id)) {
+      throw new BindDuplicateException(id);
     }
-    _configuration.container = this;
+    // Create new Binder
+    Binder binder = new Binder(this, id);
+    // Save binder in cache
+    _definitions[id] = binder;
+    return binder;
   }
-
+  
   /**
-   * Add configuration into configuration list.
+   * Use [id] for binding new injection.
    */
-  void add(Configuration config) {
-    _configuration.add(config);
+  Binder bind(Type type) {
+    assert(type != null);
+    Binder binder = bindAs(typeToString(type));
+    binder.to(type);
+    return binder;
   }
-
+  
   /**
-   * Add list of configuration into configuration.
+   * Bind all [types].
    */
-  void addAll(List<Configuration> configs) {
-    _configuration.addAll(configs);
+  void bindAll(List<Type> types) {
+    assert(types != null);
+    types.forEach((Type type){
+      bind(type);
+    });
   }
-
+  
   /**
-   * Find or create object by id.
+   * Bind List to [id].
    */
-  dynamic resolve(String id, [Map params = null]) {
-    return _configuration.cache.resolve(id, params);
+  Binder bindAsList(String id) {
+    assert(id != null);
+    Binder binder = bindAs(id);
+    binder._isList = true;
+    binder.to(List);
+    return binder;
+  }
+  
+  /**
+   * Bind Map to [id].
+   */
+  Binder bindAsMap(String id) {
+    assert(id != null);
+    Binder binder = bindAs(id);
+    binder._isMap = true;
+    binder.to(Map);
+    return binder;
+  }
+  
+  /**
+   * Check is [type] object definition exists in [Container].
+   */
+  bool isExists(Type type) {
+    assert(type != null);
+    return _definitions.containsKey(typeToString(type));
+  }
+  
+  /**
+   * Check is [id] object definition exists in [Container].
+   */
+  bool isExistsAs(String id) {
+    assert(id != null);
+    return _definitions.containsKey(id);
+  }
+  
+  /**
+   * Return an instanse by [id].
+   */
+  dynamic getAs(String id) {
+    assert(id != null);
+    if (!isExistsAs(id)) {
+      throw new BinderNotFoundException(id);
+    }
+    Binder binder = _definitions[id];
+    if (binder._definition.scope == Scope.SINGLETON) {
+      // Create new instance if necessary
+      if (binder._definition.instance == null) {
+        // Create new one
+        binder._definition.instance = _objectFactory.create(id, this, binder._definition);
+      }
+    } else {
+      // Create new instance each time when calling
+      binder._definition.instance = _objectFactory.create(id, this, binder._definition);
+    }
+    return binder._definition.instance;
+  }
+  
+  /**
+   * Return an instanse by [id].
+   */
+  dynamic get(Type type) {
+    assert(type != null);
+    return getAs(typeToString(type));
+  }
+  
+  /**
+   * Change object definition key from [oldId] to [newId];
+   */
+  void _changeId(String oldId, String newId) {
+    // Check does old id exists
+    if (_definitions.containsKey(oldId)) {
+      if (_definitions.containsKey(newId)) {
+        throw new BindDuplicateException(newId);
+      }
+      Binder binder = _definitions[oldId];
+      _definitions[newId] = binder;
+    } else {
+      throw new BinderNotFoundException(oldId);
+    }
+  }
+  
+  /**
+   * Remove all instances.
+   */
+  void clean() {
+    _definitions.clear();
   }
 }

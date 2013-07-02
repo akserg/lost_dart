@@ -18,8 +18,7 @@ class ScopeTestGroup extends TestGroup {
    * Varify scope accepts only [Scope.SINGLETON] and [PROTOTYPE] values.
    */
   void verifyTest() {
-    ut.expect(Scope.validate(Scope.SINGLETON), ut.equals(true));
-    ut.expect(Scope.validate(Scope.PROTOTYPE), ut.equals(true));
-    ut.expect(Scope.validate("test"), ut.equals(false));
+    ut.expect(Scope.SINGLETON.value, ut.equals("SINGLETON"));
+    ut.expect(Scope.PROTOTYPE.value, ut.equals("PROTOTYPE"));
   }
 }

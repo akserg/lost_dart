@@ -11,40 +11,36 @@ class ObjectFactoryTestGroup extends TestGroup {
   registerTests() {
     this.testGroupName = "ObjectFactory";
 
-    this.testList["Create an Object"] = createTest;
-    this.testList["Create an Object with Parameters"] = createWithParamsTest;
+    this.testList["Create by FactoryFunction"] = createByFactoryFunctionTest;
+    this.testList["Create by Type"] = createByTypeTest;
   }
 
   /**
    * Create an object instance.
    */
-  void createTest() {
+  void createByFactoryFunctionTest() {
+    ObjectFactory factory = new ObjectFactory();
     Container container = new Container();
-    //
-    InCodeObjectDefinition test = new InCodeObjectDefinition();
-    test.instanceFunction = (Container c, Map params) {
-      return new Baz("baz-test");
+    ObjectDefinition od = new ObjectDefinition();
+    od.factory = (){
+      return new Baz("john");
     };
-    //
-    Baz baz = container.configuration.create("first", test);
-    ut.expect(baz != null, true);
-    ut.expect(baz.name, ut.equals("baz-test"));
+    var result = factory.create("1", container, od);
+    ut.expect(result is Baz, true);
+    ut.expect((result as Baz).name, ut.equals("john"));
   }
 
   /**
    * Create an object instance with parameters
    */
-  void createWithParamsTest() {
+  void createByTypeTest() {
+    ObjectFactory factory = new ObjectFactory();
     Container container = new Container();
-    //
-    InCodeObjectDefinition test = new InCodeObjectDefinition();
-    test.instanceFunction = (Container c, Map params) {
-      return new Baz(params['name']);
-    };
-    //
-    Baz baz = container.configuration.create("first", test, {'name':'baz-test'});
-    ut.expect(baz != null, true);
-    ut.expect(baz.name, ut.equals("baz-test"));
+    ObjectDefinition od = new ObjectDefinition();
+    od.clazz = mirrors.reflectClass(Baz);
+    od.props = {"name":new ConstArgument("john")};
+    var result = factory.create("1", container, od);
+    ut.expect(result is Baz, true);
+    ut.expect((result as Baz).name, ut.equals("john"));
   }
-
 }

@@ -1,68 +1,26 @@
-//Copyright (C) 2012 Sergey Akopkokhyants. All Rights Reserved.
+//Copyright (C) 2012-2013 Sergey Akopkokhyants. All Rights Reserved.
 //Author: akserg
 
 /**
- * LostDart is Inversion of Control Container implementation for Dart.
+ * Lost Dart is Inversion of Control Container implementation for Dart.
  */
 library lost_dart;
 
-import 'dart:json' as json;
 import 'dart:mirrors' as mirrors;
 
-part 'src/exception.dart';
-part 'src/scope.dart';
-part 'src/configuration.dart';
-part 'src/configuration_processor.dart';
 part 'src/container.dart';
-part 'src/container_configuration.dart';
+part 'src/binder.dart';
+part 'src/scope.dart';
+part 'src/exception.dart';
 part 'src/object_definition.dart';
-part 'src/cache.dart';
 part 'src/object_factory.dart';
-
-// Implementation
-part 'src/impl/default_container_configuration.dart';
-part 'src/impl/in_code_configuration.dart';
-part 'src/impl/in_code_configuration_processor.dart';
-part 'src/impl/in_code_object_definition.dart';
-part 'src/impl/in_code_object_factory.dart';
-
-part 'src/impl/json_object_factory.dart';
-part 'src/impl/json_object_definition.dart';
-part 'src/impl/json_configuration.dart';
-part 'src/impl/json_configuration_processor.dart';
+part 'src/argument.dart';
 
 /**
- * Identifies injectable constructors, methods, and fields
+ * Convert [type] qualified name to String.
  */
-class Inject {
-  List<String> _args;
-  
-  Inject(args) {
-    if (args != null) {
-      if (args is String) {
-        _args = [args as String];
-      } else if (args is List<String>) {
-        _args = args as List<String>;
-      } else {
-        throw new InjectionException("Argument type can be a String or array of String");
-      }
-    }
-  }
-}
-
-/**
- * Exception thrown when injection problem happen.
- */
-class InjectionException implements Exception {
-  /**
-   * A message describing the error.
-   */
-  final String message;
-
-  /**
-   * Creates a new InjectionException with an optional error [message].
-   */
-  const InjectionException([this.message = ""]);
-
-  String toString() => "InjectionException: $message";
+String typeToString(Type type) {
+  assert(type != null);
+  mirrors.ClassMirror classMirror = mirrors.reflectClass(type);
+  return classMirror.qualifiedName.toString();
 }

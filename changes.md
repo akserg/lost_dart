@@ -1,6 +1,10 @@
 Lost Dart Changes
 ==============
 
+** July 1, 2013
+
+* Library design has been changed and simplified and includes huge number of incompatible changes.
+
 ** June 26, 2013
 
 * Implementation of DI based on JSON configuration.

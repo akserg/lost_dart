@@ -1,63 +1,23 @@
 ##Lost Dart
 
-Lost Dart is implementation of Inversion of Control container written on Dart language.
+Lost Dart is lightweight dependency injection framework for Dart client and server applications.
 
 [![](https://drone.io/akserg/lost_dart/status.png)](https://drone.io/akserg/lost_dart/latest)
 
-It manages dependency injection and dependency management. Its aim is to make wide range of Dart applications easier to:
+It helps you split your application into a collection of loosely-coupled pieces and then glue them back together in a flexible manner. Its aim is to make wide range of Dart applications easier to:
 * Manage source code;
 * Encouraging code modularisation;
 * Separations of concerns;
 * Good unit testing practices.
 
-Main class in Lost Dart is Container, exposes set of methods using to manage configurations and resolve instance by identifier. The configuration consists of object definitions implemented either in-code or like JSON objects (not implemented yet). Configuration wires the application together.  
-
-```javascript
-// Create IoC container
-Container container = new Container();
-
-// Create configuration
-Configuration config = new InCodeConfiguration()
-  // Add Baz
-  ..add("baz", (Container container, Map params){
-    return new Baz(params["name"]);
-  })
-  // Add Bar
-  ..add("bar", (Container container, Map params){
-    // Find baz
-    Baz baz = container.resolve("baz");
-    // Create Bar with constructor injection
-    Bar bar = new Bar(baz);
-    return bar;
-  })
-  // Add Foo
-  ..add("foo", (Container container, Map params){
-    // Create Foo
-    Foo foo = new Foo();
-    // Find bar
-    Bar bar = container.resolve("bar");
-    // Assign bar to foo - property injection
-    foo.bar = bar;
-    return foo;
-  });
-
-// Add configuration
-container.add(config);
-
-// Resolve baz
-Baz baz = container.resolve("baz");
-```
-
-Container is not a singleton. Depends on development strategy or business requirements developer might implement set of configurations having relations any kind of complexity.
-
 ###Set up
 Lost Dart is available under the lost_dart pub package. Simply add a dependency to your pubspec.yaml file:
 
-```javascript
+<pre class="syntax brush-javascript">
 ...
 dependencies:
   lost_dart: any
-``` 
+</pre> 
 
 Then run pub install and you’ll have everything you need to get started.
 
@@ -67,66 +27,66 @@ Then run pub install and you’ll have everything you need to get started.
 
 A simple example of using the Lost Dart is that to construct an instance of an object. 
 
-```javascript
-// Somewhere in developing library
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
+
+// Class Baz
 class Baz{
   String name;
   
   Baz([this.name = ""]);
 }
 
-// Create IoC container
-Container container = new Container();
+void main() {
+  // Create container
+  Container container = new Container();
+  
+  // Bind Baz
+  container.bind(Baz);
+  
+  // Resolve baz by type
+  Baz baz = container.get(Baz);
+  assert(baz != null);
+  assert(baz.name == "");
+}
+</pre>
 
-// Configuration
-Configuration config = new InCodeConfiguration()
-  // Add Baz
-  ..add("baz", (Container container, Map params){
-    return new Baz();
-  });
+###Constructor injection: Constant arguments
 
-// Add configuration
-container.add(config);
+Constant values are set an constructor argument:
 
-// Resolve baz
-Baz baz = container.resolve("baz");
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
 
-// Test result
-assert(baz != null);
-assert(baz.name == "");
-```
+// Class Baz
+class Baz{
+  String name;
+  int number = 22;
+  
+  Baz([this.name = ""]);
+}
 
-###Constructor injection: Literals arguments
+void main() {
+  // Create IoC container
+  Container container = new Container();
+  // Bind Baz
+  container.bind(Baz).addConstructorConstArg("Test");
 
-Literal values are set in the configuration:
+  // Resolve baz
+  Baz baz = container.get(Baz);
 
-```javascript
-// Configuration
-Configuration config = new InCodeConfiguration()
-  // Add Baz
-  ..add("baz", (Container container, Map params){
-    return new Baz("Test");
-  });
-
-// …
-
-// Test result
-assert(baz.name == "Test");
-```
-
-###Constructor injection: Using a map of named literals
-
-Developers might specify map of named literals in second argument to be used in class instantiation as constructor arguments: 
-
-```javascript
-Baz baz1 = container.resolve("baz", {"name":"Test"});
-```
+  // Test result
+  assert(baz.name == "Test");
+}
+</pre>
 
 ###Constructor injection: Dependencies
 
-A tree of dependencies are instantiated and injected using the configuration:
+A tree of dependencies are instantiated and injected using the constructor argument or property:
 
-```javascript
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
+
 // application code
 class Baz{
   String name;
@@ -140,65 +100,38 @@ class Bar{
   Bar(this.baz);
 }
 
-// Create IoC container
-Container container = new Container();
 
-// Create configuration
-Configuration config = new InCodeConfiguration()
-  // Add Baz
-  ..add("baz", (Container container, Map params){
-    return new Baz(params["name"]);
-  })
-  // Add Bar
-  ..add("bar", (Container container, Map params){
-    // Find baz
-    Baz baz = container.resolve("baz");
-    // Create Bar with constructor injection
-    Bar bar = new Bar(baz);
-    return bar;
-  });
+void main() {
+  // Create IoC container
+  Container container = new Container();
 
-// Create IoC container
-Container container = new Container();
+  container.bind(Baz);
+  container.bind(Bar).addConstructorTypeArg(Baz);
 
-// Add configuration
-container.add(config);
+  // Resolve baz
+  Baz baz = container.get(Baz);
 
-// Resolve baz
-Baz baz = container.resolve("baz");
+  // Test result of baz
+  assert(baz != null);
+  assert(baz.name == "99");
+  assert(baz.number == 22);
 
-// Test result of baz
-assert(baz != null);
-assert(baz.name == "");
+  // Resolve bar
+  Bar bar = container.get(Bar);
 
-// Resolve bar
-Bar bar = container.resolve("bar");
+  // Test result of bar
+  assert(bar != null);
+  assert(bar.baz.name == "99");
+}
+</pre>
 
-// Test result of bar
-assert(bar != null);
-assert(bar.baz.name == "");
-```
+###Property injection: Constant values
 
-As you seen in previous example to use references to other instances of objects we may ask container to resolve reference on other instance:
+Constant values are set in the property:
 
-```javascript
-// Create configuration
-Configuration config = new InCodeConfiguration()
-  // Add Bar
-  ..add("bar", (Container container, Map params){
-  // Find baz
-  Baz baz = container.resolve("baz");
-  // Create Bar with constructor injection
-  Bar bar = new Bar(baz);
-  return bar;
-})
-```
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
 
-###Property injection: Literal values
-
-Literal values are set in the configuration:
-
-```javascript
 // application code
 class Baz{
   String name;
@@ -207,128 +140,199 @@ class Baz{
   Baz([this.name = "99"]);
 }
 
-// Create configuration
-Configuration config = new InCodeConfiguration()
-  // Add Baz
-  ..add("baz", (Container container, Map params){
-    Baz baz = new Baz(params["name"]);
-    Baz.number = 33;
-    return baz;
-  });
+void main() {
+  // Create IoC container
+  Container container = new Container();
 
+  // Bind Baz
+  container.bind(Baz).setConstProperty("number", 33);
 
-// Create IoC container
-Container container = new Container();
-// Add configuration
-container.add(config);
-
-// Resolve baz
-Baz baz = container.resolve("baz", {"name":"123"});
-
-// Test result
-assert(baz.name == "123");
-assert(baz.number == 33);
-```
+  // Resolve baz
+  Baz baz = container.get(Baz);
+  
+  // Test result
+  assert(baz.name == "99");
+  assert(baz.number == 33);
+}
+</pre>
 
 ###Property injection: Dependencies
 
-A tree of dependencies are instantiated and injected using the configuration:
+A tree of dependencies are instantiated and injected using the property:
 
-```javascript
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
+
 // application code
 class Baz{
   String name;
-  int number = 22;
 
   Baz([this.name = "99"]);
 }
 
-Class Bar{
+class Bar{
   Baz baz;
 
   Bar();
 }
 
-// Create configuration
-Configuration config = new InCodeConfiguration()
-  // Add Baz
-  ..add("baz", (Container container, Map params){
-    return new Baz(params["name"]);
-  })
-  // Add Bar
-  ..add("bar", (Container container, Map params){
-    Bar bar = new Bar();
-    bar.baz = container.resolve("baz");
-    return bar;
-  });
+void main() {
 
+  // Create IoC container
+  Container container = new Container();
 
-// Create IoC container
-Container container = new Container();
+  // Bind Bar
+  container.bind(Bar).setTypeProperty("baz", Bar);
 
-// Add configuration
-container.add(config);
+  // Bind Baz
+  container.bind(Baz);
 
-// Resolve baz
-Baz baz = container.resolve("baz");
-
-// Resolve bar
-Bar bar = container.resolve("bar");
-
-// Test result
-assert(baz.baz == baz);
-```
-
-###Object scopes
-
-Lost Dart supports two scopes: singleton and prototype. The first is used by default and does not need to be explicitly specified in the configuration. Objects that use the singleton scope will only be instantiated once.
-
-```javascript
-//application code
-class Baz{
-  String name;
-  int number = 22;
-
-  Baz([this.name = "99"]);
-}
-
-
-// Create configuration
-Configuration config = new InCodeConfiguration()
-  // Add Baz
-  ..add("baz", (Container container, Map params){
-    Baz baz = new Baz();
-    baz.name = params["name"];
-    return baz;
-  }, Scope.PROTOTYPE)
-  // Add Bar
-  ..add("bar", (Container container, Map params) {
-    return new Bar();
-  }
-
-// Create IoC container
-Container container = new Container();
-
-// Add configuration
-container.add(config);
-
-// Resolve baz - "prototype" scope.
-Baz baz = container.resolve("baz");
-Baz baz1 = container.resolve("baz");
-// Test prototype result
-assert(baz != baz1);
-
-// Resolve bar – "singleton" scope
-Bar bar = container.resolve("bar");
-Bar bar1 = container.resolve("bar");
-// Test prototype result
-assert(bar == bar1);
-```
+  // Resolve bar
+  Bar bar = container.get(Bar);
+  
+  // Test result
+  assert(bar.baz != null);
+  assert(bar.baz.name == "99");
+}</pre>
 
 ###Factory methods
 
 Factory methods can be used to generate injected values
 
-```javascript
-Not implemented yet
-```
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
+
+//application code
+class Baz{
+  String name;
+  
+  Baz(this.name);
+}
+
+void main() {
+  // Create IoC container
+  Container container = new Container();
+  
+  // Add Baz
+  container.bind(Baz).toFactory((){
+    return new Baz("1");
+  });
+  
+  // Resolve baz
+  Baz baz = container.get(Baz);
+
+  // Test prototype result
+  assert(baz != null);
+  assert(baz.name == '1');
+}
+</pre>
+
+###Object scopes
+
+Lost Dart supports two scopes: singleton and prototype. The first is used by default and does not need to be explicitly specified in binding.
+
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
+
+//application code
+class Baz{
+}
+
+void main() {
+  // Create IoC container
+  Container container = new Container();
+  
+  // Add Baz
+  container.bind(Baz).asPrototype();
+  
+  // Resolve baz - "prototype" scope.
+  Baz baz = container.get(Baz);
+  Baz baz1 = container.get(Baz);
+  // Test prototype result
+  assert(baz != baz1);
+}
+</pre>
+
+###Multi injection
+
+Lost Dart allows you to inject multiple objects bound to a particular type or interface. There are <pre class="syntax brush-javascript">Weapon interface</pre>, and two implementations, <pre class="syntax brush-javascript">Sword</pre> and <pre class="syntax brush-javascript">Dagger</pre>.
+The constructor of <pre class="syntax brush-javascript">Samurai</pre> class takes an array of <pre class="syntax brush-javascript">Weapon</pre>. Use <pre class="syntax brush-javascript">bindAsList</pre> method of <pre class="syntax brush-javascript">Container</pre> and specify you items here.
+
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
+
+/**
+ * Asbtract class Weapon
+ */
+abstract class Weapon
+{
+  /**
+   * Hit the [target].
+   */
+  String Hit(String target);
+}
+
+/**
+ * Sword Weapon
+ */
+class Sword implements Weapon 
+{
+  /**
+   * Hit the [target].
+   */
+  String Hit(String target) 
+  {
+    return "Slice " + target + " in half";
+  }
+}
+
+/**
+ * Dagger Weapon
+ */
+class Dagger implements Weapon 
+{
+  /**
+   * Hit the [target].
+   */
+  String Hit(String target) 
+  {
+    return "Stab " + target + " to death";
+  }
+}
+
+/**
+ * Samurai fully equipped.
+ */
+class Samurai 
+{
+  List<Weapon> allWeapons;
+
+  Samurai(List<Weapon> this.allWeapons); 
+
+  /**
+   * Just attack the [target].
+   */
+  void Attack(String target) 
+  {
+    for (Weapon weapon in this.allWeapons) {
+      print(weapon.Hit(target));
+    }
+  }
+}
+
+void main() {
+  Container container = new Container();
+  // Bind weapons
+  container.bind(Sword);
+  container.bind(Dagger);
+  // Bind weapons in list
+  container.bindAsList("weapons").addAllTypesToList([Sword, Dagger]);
+  // Bind Samurai
+  container.bind(Samurai).addConstructorRefArg("weapons");
+  
+  // Get samurai 
+  Samurai samurai = container.get(Samurai);
+  // Atack
+  samurai.Attack("your enemy");
+}
+</pre>

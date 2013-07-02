@@ -1,174 +1,92 @@
-//Copyright (C) 2012 Sergey Akopkokhyants. All Rights Reserved.
+//Copyright (C) 2012-2013 Sergey Akopkokhyants. All Rights Reserved.
 //Author: akserg
 
 part of lost_dart;
 
 /**
- * Exception thrown when a object definition not found.
+ * Exception thrown when we try to bind the same id.
  */
-class DefinitionNotFoundException implements Exception {
+class BindDuplicateException implements Exception {
   /**
-   * A message describing the error.
+   * Bind id.
    */
-  final String message;
+  final String id;
 
   /**
-   * Creates a new DefinitionNotFoundException with an optional error [message].
+   * Creates a new BindDuplicateException with an optional error [id].
    */
-  const DefinitionNotFoundException([this.message = ""]);
+  const BindDuplicateException([this.id = ""]);
 
-  String toString() => "DefinitionNotFoundException: $message";
+  /**
+   * Print out the message.
+   */
+  String toString() => "Bind duplicate $id";
 }
 
 /**
- * Exception thrown when duplicate object definition found.
+ * Exception thrown when binder not found.
  */
-class FoundDuplicateDefinitionException implements Exception {
+class BinderNotFoundException implements Exception {
   /**
-   * A message describing the error.
+   * Binder id.
    */
-  final String message;
+  final String id;
 
   /**
-   * Creates a new FoundDuplicateDefinitionException with an optional error [message].
+   * Creates a new BinderNotFoundException with an optional error [id].
    */
-  const FoundDuplicateDefinitionException([this.message = ""]);
+  const BinderNotFoundException([this.id = ""]);
 
-  String toString() => "FoundDuplicateDefinitionException: $message";
+  String toString() => "Identifier '$id' was not bound";
 }
 
 /**
- * Exception thrown when unknown configuration type found.
+ * Exception thrown when instantiate object not found.
  */
-class UnknownObjectDefinitionTypeException implements Exception {
+class InstanceCreationException implements Exception {
   /**
-   * A message describing the error.
+   * Binder id.
    */
-  final String message;
+  final String id;
 
   /**
-   * Creates a new UnknownObjectDefinitionTypeException with an optional error [message].
+   * Creates a new InstanceCreationException with an optional error [id].
    */
-  const UnknownObjectDefinitionTypeException([this.message = ""]);
+  const InstanceCreationException([this.id = ""]);
 
-  String toString() => "UnknownObjectDefinitionTypeException: $message";
+  String toString() => "Can not create Instance by $id";
 }
 
 /**
- * Exception thrown when duplicate configuration object found.
+ * Exception thrown when binding incorrect type.
  */
-class FoundDuplicateConfigurationObjectException implements Exception {
+class IncorrectBindingTypeException implements Exception {
   /**
-   * A message describing the error.
+   * Message.
    */
   final String message;
 
   /**
-   * Creates a new FoundDuplicateConfigurationObjectException with an optional error [message].
+   * Creates a new IncorrectBindingTypeException with an optional error [message].
    */
-  const FoundDuplicateConfigurationObjectException([this.message = ""]);
+  const IncorrectBindingTypeException([this.message = ""]);
 
-  String toString() => "FoundDuplicateConfigurationObjectException: $message";
+  String toString() => "$message";
 }
 
 /**
- * Exception thrown when configuration object not found.
+ * Exception thrown when argument type unsupport.
  */
-class ConfigurationObjectNotFoundException implements Exception {
+class UnsupportArgumentTypeException implements Exception {
   /**
-   * A message describing the error.
+   * Argument.
    */
-  final String message;
-
-  /**
-   * Creates a new ConfigurationObjectNotFoundException with an optional error [message].
-   */
-  const ConfigurationObjectNotFoundException([this.message = ""]);
-
-  String toString() => "ConfigurationObjectNotFoundException: $message";
-}
-
-/**
- * Exception thrown when invalid scope found.
- */
-class InvalidScopeException implements Exception {
-  /**
-   * A message describing the error.
-   */
-  final String message;
+  final dynamic arg;
 
   /**
-   * Creates a new InvalidScopeException with an optional error [message].
+   * Creates a new UnsupportArgumentTypeException with an optional error [arg].
    */
-  const InvalidScopeException([this.message = ""]);
+  const UnsupportArgumentTypeException([this.arg = ""]);
 
-  String toString() => "InvalidScopeException: $message";
-}
-
-/**
- * Exception thrown when unknown configuration type found.
- */
-class UnknownConfigurationTypeException implements Exception {
-  /**
-   * A message describing the error.
-   */
-  final String message;
-
-  /**
-   * Creates a new UnknownConfigurationTypeException with an optional error [message].
-   */
-  const UnknownConfigurationTypeException([this.message = ""]);
-
-  String toString() => "UnknownConfigurationTypeException: $message";
-}
-
-/**
- * Exception thrown when configuration object not found.
- */
-class ContainerNotInitialisedException implements Exception {
-  /**
-   * A message describing the error.
-   */
-  final String message;
-
-  /**
-   * Creates a new ContainerNotInitialisedException with an optional error [message].
-   */
-  const ContainerNotInitialisedException([this.message = ""]);
-
-  String toString() => "ContainerNotInitialisedException: $message";
-}
-
-/**
- * Exception thrown when class not found.
- */
-class ClassNotFoundException implements Exception {
-  /**
-   * A message describing the error.
-   */
-  final String message;
-
-  /**
-   * Creates a new ClassNotFoundException with an optional error [message].
-   */
-  const ClassNotFoundException([this.message = ""]);
-
-  String toString() => "ClassNotFoundException: $message";
-}
-
-/**
- * Exception thrown when library not found.
- */
-class LibraryNotFoundException implements Exception {
-  /**
-   * A message describing the error.
-   */
-  final String message;
-
-  /**
-   * Creates a new LibraryNotFoundException with an optional error [message].
-   */
-  const LibraryNotFoundException([this.message = ""]);
-
-  String toString() => "LibraryNotFoundException: $message";
+  String toString() => "Unsupport argument type: $arg";
 }

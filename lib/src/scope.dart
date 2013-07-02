@@ -1,4 +1,4 @@
-//Copyright (C) 2012 Sergey Akopkokhyants. All Rights Reserved.
+//Copyright (C) 2012-2013 Sergey Akopkokhyants. All Rights Reserved.
 //Author: akserg
 
 part of lost_dart;
@@ -6,14 +6,16 @@ part of lost_dart;
 /**
  * Object definition scope.
  */
-class Scope {
-  static const String SINGLETON = "SINGLETON";
-  static const String PROTOTYPE = "PROTOTYPE";
+class Scope<String> {
+  
+  final String _value;
+  
+  const Scope(this._value);
+  
+  String get value => _value;
 
-  /**
-   * Check is scope equals [SINGLETON] or [PROTOTYPE].
-   */
-  static bool validate(String scope) {
-    return scope == SINGLETON || scope == PROTOTYPE;
-  }
+  /// SINGLETON scope
+  static const Scope SINGLETON = const Scope("SINGLETON");
+  /// PROTOTYPE scope
+  static const Scope PROTOTYPE = const Scope("PROTOTYPE");
 }
