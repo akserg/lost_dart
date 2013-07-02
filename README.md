@@ -71,12 +71,15 @@ void main() {
   Container container = new Container();
   // Bind Baz
   container.bind(Baz).addConstructorConstArg("Test");
+  container.bindAs("baz2").to(Baz).addConstructorConstArg("Test2");
 
   // Resolve baz
   Baz baz = container.get(Baz);
+  Baz baz2 = container.getAs("baz2");
 
   // Test result
   assert(baz.name == "Test");
+  assert(baz2.name == "Test2");
 }
 </pre>
 
@@ -107,21 +110,18 @@ void main() {
 
   container.bind(Baz);
   container.bind(Bar).addConstructorTypeArg(Baz);
-
-  // Resolve baz
-  Baz baz = container.get(Baz);
-
-  // Test result of baz
-  assert(baz != null);
-  assert(baz.name == "99");
-  assert(baz.number == 22);
+  container.bindAs("bar2").to(Bar).addConstructorTypeArg(Baz);
 
   // Resolve bar
   Bar bar = container.get(Bar);
+  Bar bar2 = container.getAs("bar2");
 
   // Test result of bar
   assert(bar != null);
   assert(bar.baz.name == "99");
+  assert(bar2 != null);
+  assert(bar2.baz.name == "99");
+  assert(bar.baz == bar.baz);
 }
 </pre>
 
@@ -146,13 +146,15 @@ void main() {
 
   // Bind Baz
   container.bind(Baz).setConstProperty("number", 33);
+  container.bindAs("baz2").to(Baz).setConstProperty("number", 44);
 
   // Resolve baz
   Baz baz = container.get(Baz);
+  Baz baz2 = container.getAs("baz2");
   
   // Test result
-  assert(baz.name == "99");
   assert(baz.number == 33);
+  assert(baz2.number == 44);
 }
 </pre>
 
@@ -183,48 +185,73 @@ void main() {
 
   // Bind Bar
   container.bind(Bar).setTypeProperty("baz", Bar);
+  container.bindAs("bar2").to(Bar).setTypeProperty("baz", Bar);
 
   // Bind Baz
   container.bind(Baz);
 
   // Resolve bar
   Bar bar = container.get(Bar);
+  Bar bar2 = container.getAs("bar2");
   
   // Test result
-  assert(bar.baz != null);
-  assert(bar.baz.name == "99");
+  assert(bar.baz.name == bar2.baz.name);
 }
 </pre>
 
 ###Factory methods
 
-Factory methods can be used to generate injected values
+The Factory methods have maximum flexibility to generate any type of injected values
 
 <pre class="syntax brush-javascript">
 import 'package:lost_dart/lost_dart.dart';
 
 //application code
-class Baz{
-  String name;
+class Network{
+  String uri;
   
-  Baz(this.name);
+  Network(this.uri);
+}
+
+class User {
+  String name;
+}
+
+class Manager{
+  Network network;
+  User user;
+
+  Manager(this.user);
 }
 
 void main() {
   // Create IoC container
   Container container = new Container();
-  
-  // Add Baz
-  container.bind(Baz).toFactory((){
-    return new Baz("1");
+
+  // Add host
+  container.bindAs("host").toFactory((){
+    return "http://127.0.0.1";
   });
   
-  // Resolve baz
-  Baz baz = container.get(Baz);
+  // Add Network
+  container.bind(Network).addConstructorRefArg("host");
+  
+  // Add User
+  container.bind(User).setConstProperty("name", "Admin");
+  
+  // Add Manager
+  container.bind(Manager).toFactory((){
+    Manager bar = new Manager(container.get(User));
+    bar.network = container.get(Network);
+    return bar;
+  });
+  
+  // Resolve Manager
+  Manager manager = container.get(Manager);
 
-  // Test prototype result
-  assert(baz != null);
-  assert(baz.name == '1');
+  // Test result
+  assert(manager.network.uri == "http://127.0.0.1");
+  assert(manager.user.name == "Admin");
 }
 </pre>
 

@@ -1,76 +1,49 @@
 import 'package:lost_dart/lost_dart.dart';
 
-/**
- * Asbtract class Weapon
- */
-abstract class Weapon
-{
-  /**
-   * Hit the [target].
-   */
-  String Hit(String target);
+//application code
+class Network{
+  String uri;
+  
+  Network(this.uri);
 }
 
-/**
- * Sword Weapon
- */
-class Sword implements Weapon 
-{
-  /**
-   * Hit the [target].
-   */
-  String Hit(String target) 
-  {
-    return "Slice " + target + " in half";
-  }
+class User {
+  String name;
 }
 
-/**
- * Dagger Weapon
- */
-class Dagger implements Weapon 
-{
-  /**
-   * Hit the [target].
-   */
-  String Hit(String target) 
-  {
-    return "Stab " + target + " to death";
-  }
-}
+class Manager{
+  Network network;
+  User user;
 
-/**
- * Samurai fully equipped.
- */
-class Samurai 
-{
-  List<Weapon> allWeapons;
-
-  Samurai(List<Weapon> this.allWeapons); 
-
-  /**
-   * Just attack the [target].
-   */
-  void Attack(String target) 
-  {
-    for (Weapon weapon in this.allWeapons) {
-      print(weapon.Hit(target));
-    }
-  }
+  Manager(this.user);
 }
 
 void main() {
+  // Create IoC container
   Container container = new Container();
-  // Bind weapons
-  container.bind(Sword);
-  container.bind(Dagger);
-  // Bind weapons in list
-  container.bindAsList("weapons").addAllTypesToList([Sword, Dagger]);
-  // Bind Samurai
-  container.bind(Samurai).addConstructorRefArg("weapons");
+
+  // Add host
+  container.bindAs("host").toFactory((){
+    return "http://127.0.0.1";
+  });
   
-  // Get samurai 
-  Samurai samurai = container.get(Samurai);
-  // Atack
-  samurai.Attack("your enemy");
+  // Add Network
+  container.bind(Network).addConstructorRefArg("host");
+  
+  // Add User
+  container.bind(User).setConstProperty("name", "Admin");
+  
+  // Add Manager
+  container.bind(Manager).toFactory((){
+    Manager bar = new Manager(container.get(User));
+    bar.network = container.get(Network);
+    return bar;
+  });
+  
+  // Resolve Manager
+  Manager manager = container.get(Manager);
+
+  // Test result
+  assert(manager.network.uri == "http://127.0.0.1");
+  assert(manager.user.name == "Admin");
 }
