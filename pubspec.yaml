@@ -4,5 +4,4 @@ author: Sergey Akopkokhyants <akserg@gmail.com>
 description: Lost Dart is Inversion of Control Container implementation for Dart.
 homepage: http://www.lostdart.com
 dependencies:
-  browser: '>=0.5.20'
   unittest: '>=0.5.20'
