@@ -23,27 +23,14 @@ class ObjectFactory {
       return result;
     } else if (od.clazz != null) {
       // Clazz presents
-      if (od.clazz.qualifiedName.toString() == typeToString(List)) {
-        // List items
-        return _resolveConstructorArguments(container, od.constructorArgs);
-      } else if (od.clazz.qualifiedName.toString() == typeToString(Map)) {
-        // Map items
-        Map map = new Map();
-        // Set map values if necessary
-        if (od.props.isNotEmpty) {
-          _setMapItems(container, map, od.props);
-        } 
-        return map;
-      } else {
-        // Use Factory Class to make an instance
-        mirrors.InstanceMirror instanceMirror = od.clazz.newInstance(od.constructorName, _resolveConstructorArguments(container, od.constructorArgs));
-        // Set fields if necessary
-        if (od.props.isNotEmpty) {
-          _setFields(container, instanceMirror, od.props);
-        }
-        // Return an instance
-        return instanceMirror.reflectee;
+      // Use Factory Class to make an instance
+      mirrors.InstanceMirror instanceMirror = od.clazz.newInstance(od.constructorName, _resolveConstructorArguments(container, od.constructorArgs));
+      // Set fields if necessary
+      if (od.props.isNotEmpty) {
+        _setFields(container, instanceMirror, od.props);
       }
+      // Return an instance
+      return instanceMirror.reflectee;
     }
     // We have no way to create an instance of class
     throw new InstanceCreationException(id);
@@ -70,30 +57,6 @@ class ObjectFactory {
         throw new UnsupportArgumentTypeException(arg);
       }
       instanceMirror.setField(new Symbol(name), propValue);
-    }
-  }
-  
-  /**
-   * Set fields in [instanceMirror] from [props] map.
-   */
-  void _setMapItems(Container container, Map map, Map props) {
-    // Apply paramters
-    for (String name in props.keys) {
-      dynamic propValue = null;
-      Argument arg = props[name];
-      if (arg is TypeArgument) {
-        //result.add(container.getType((arg as TypeArgument).value));
-        propValue = container.get((arg as TypeArgument).value);
-      } else if (arg is RefArgument) {
-        //result.add(container.get((arg as RefArgument).value));
-        propValue = container.getAs((arg as RefArgument).value);
-      } else if (arg is ConstArgument) {
-        //result.add((arg as ConstArgument).value);
-        propValue = (arg as ConstArgument).value;
-      } else {
-        throw new UnsupportArgumentTypeException(arg);
-      }
-      map[name] = propValue;
     }
   }
   

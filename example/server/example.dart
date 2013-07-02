@@ -1,54 +1,83 @@
-//Copyright (C) 2012-2013 Sergey Akopkokhyants. All Rights Reserved.
-//Author: akserg
-
-library example;
-
 import 'package:lost_dart/lost_dart.dart';
 
+/**
+ * Asbtract class Weapon
+ */
+abstract class Weapon
+{
+  /**
+   * Hit the [target].
+   */
+  String Hit(String target);
+}
+
+/**
+ * Sword Weapon
+ */
+class Sword implements Weapon 
+{
+  /**
+   * Hit the [target].
+   */
+  String Hit(String target) 
+  {
+    return "Slice " + target + " in half";
+  }
+}
+
+/**
+ * Dagger Weapon
+ */
+class Dagger implements Weapon 
+{
+  /**
+   * Hit the [target].
+   */
+  String Hit(String target) 
+  {
+    return "Stab " + target + " to death";
+  }
+}
+
+/**
+ * Samurai fully equipped.
+ */
+class Samurai 
+{
+  List<Weapon> allWeapons;
+
+  Samurai(List<Weapon> this.allWeapons); 
+
+  /**
+   * Just attack the [target].
+   */
+  void Attack(String target) 
+  {
+    for (Weapon weapon in this.allWeapons) {
+      print(weapon.Hit(target));
+    }
+  }
+}
+
 void main() {
-  // Create container
   Container container = new Container();
   
-  // Bind Baz
-  container.bind(Baz).addConstructorConstArg("story");
-  // Bind Bar
-  container.bind(Bar).addConstructorTypeArg(Baz);
-  // Bind Foo
-  container.bind(Foo).setTypeProperty("bar", Bar);
+  // Bind Sword
+  container.bind(Sword);
+  // Bind Sword
+  container.bind(Dagger);
+  // Bind weapons as list
+  container.bindAs("weapons").toFactory(() {
+    return [container.get(Sword), container.get(Dagger)];
+  });
   
-  // Resolve baz
-  Baz baz = container.get(Baz);
-  print(baz);
-  Foo foo = container.get(Foo);
-  print(foo);
-}
-
-// Somewhere in developing library
-class Baz {
-  String name;
-
-  Baz([this.name = ""]);
-}
-
-class Bar {
-  Baz baz;
-  Bar(this.baz);
-}
-
-class Foo {
-  Bar bar;
-}
-
-abstract class Weapon {
-  String name;
   
-  Weapon(this.name);
-}
-
-class Gun extends Weapon {
-  Gun() : super("Gun");
-}
-
-class MachineGun extends Weapon {
-  MachineGun() : super("Machine Gun");
+  // Bind Samurai with list of weapons
+  container.bind(Samurai).addConstructorRefArg("weapons");
+  
+  
+  // Get samurai 
+  Samurai samurai = container.get(Samurai);
+  // Atack
+  samurai.Attack("your enemy");
 }

@@ -58,23 +58,6 @@ class InstanceCreationException implements Exception {
 }
 
 /**
- * Exception thrown when binding incorrect type.
- */
-class IncorrectBindingTypeException implements Exception {
-  /**
-   * Message.
-   */
-  final String message;
-
-  /**
-   * Creates a new IncorrectBindingTypeException with an optional error [message].
-   */
-  const IncorrectBindingTypeException([this.message = ""]);
-
-  String toString() => "$message";
-}
-
-/**
  * Exception thrown when argument type unsupport.
  */
 class UnsupportArgumentTypeException implements Exception {

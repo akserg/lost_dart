@@ -17,12 +17,6 @@ class Binder<T> {
   /// Reference id in container.
   String _id;
   
-  /// Flag mark binder as list
-  bool _isList = false;
-  
-  /// Flag mark binder as map
-  bool _isMap = false;
-  
   /// Object Definition
   final ObjectDefinition _definition;
   
@@ -143,109 +137,5 @@ class Binder<T> {
     assert(value != null);
     _definition.constructorArgs.add(new ConstArgument(value));
     return this;
-  }
-  
-  //*************
-  // List binding
-  //*************
-  
-  /**
-   * Add [type] to list binder.
-   */
-  Binder addTypeToList(Type type) {
-    assert(type != null);
-    if (!_isList) {
-      throw new IncorrectBindingTypeException("That method only of list binder.");
-    }
-    return addConstructorTypeArg(type);
-  }
-  
-  /**
-   * Add [id] reference to list binder.
-   */
-  Binder addRefToList(String id) {
-    assert(id != null);
-    if (!_isList) {
-      throw new IncorrectBindingTypeException("That method only of list binder.");
-    }
-    return addConstructorRefArg(id);
-  }
-  
-  /**
-   * Add dynamic [value] to list binder.
-   */
-  Binder addConstToList(dynamic value) {
-    assert(value != null);
-    if (!_isList) {
-      throw new IncorrectBindingTypeException("That method only of list binder.");
-    }
-    return addConstructorConstArg(value);
-  }
-  
-  /**
-   * Add list of [types] to list.
-   */
-  Binder addAllTypesToList(List<Type> types) {
-    assert(types != null);
-    types.forEach((Type type){
-      addTypeToList(type);
-    });
-  }
-  
-  /**
-   * Add list of [id] to list.
-   */
-  Binder addAllRefsToList(List<String> ids) {
-    assert(ids != null);
-    ids.forEach((String id){
-      addRefToList(id);
-    });
-  }
-  
-  /**
-   * Add list of constant [value] to list.
-   */
-  Binder addAllConstsToList(List<dynamic> values) {
-    assert(values != null);
-    values.forEach((dynamic value){
-      addConstToList(value);
-    });
-  }
-  
-  //*************
-  // Map binding
-  //*************
-  
-  /**
-   * Add [property] - [type] to map binder.
-   */
-  Binder addTypeToMap(String property, Type type) {
-    assert(type != null);
-    if (!_isMap) {
-      throw new IncorrectBindingTypeException("That method only of map binder.");
-    }
-    return setTypeProperty(property, type);
-  }
-  
-  /**
-   * Add [property] - [id] reference to map binder.
-   */
-  Binder addRefToMap(String property, String id) {
-    assert(id != null);
-    if (!_isList) {
-      throw new IncorrectBindingTypeException("That method only of map binder.");
-    }
-    return setRefProperty(property, id);
-  }
-  
-  /**
-   * Add [property] - dynamic [value] to map binder.
-   */
-  Binder addConstToMap(String property, dynamic value) {
-    assert(value != null);
-    if (!_isList) {
-      throw new IncorrectBindingTypeException("That method only of map binder.");
-    }
-    return setConstProperty(property, value);
   }
 }

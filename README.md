@@ -318,7 +318,7 @@ void main() {
 ###Multi injection
 
 Lost Dart allows you to inject multiple objects bound to a particular type or interface. There are Weapon interface, and two implementations, Sword and Dagger.
-The constructor of Samurai class takes an array of Weapon. Use bindAsList method of Container and specify you items here.
+The constructor of Samurai class takes an array of Weapon. The toFactory method of Binder return the list of Weapons to be used in Samurai constructor.
 
 <pre class="syntax brush-javascript">
 import 'package:lost_dart/lost_dart.dart';
@@ -384,13 +384,20 @@ class Samurai
 
 void main() {
   Container container = new Container();
-  // Bind weapons
+  
+  // Bind Sword
   container.bind(Sword);
+  // Bind Sword
   container.bind(Dagger);
-  // Bind weapons in list
-  container.bindAsList("weapons").addAllTypesToList([Sword, Dagger]);
-  // Bind Samurai
+  // Bind weapons as list
+  container.bindAs("weapons").toFactory(() {
+    return [container.get(Sword), container.get(Dagger)];
+  });
+  
+  
+  // Bind Samurai with list of weapons
   container.bind(Samurai).addConstructorRefArg("weapons");
+  
   
   // Get samurai 
   Samurai samurai = container.get(Samurai);

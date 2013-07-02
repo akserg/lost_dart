@@ -55,28 +55,6 @@ class Container {
   }
   
   /**
-   * Bind List to [id].
-   */
-  Binder bindAsList(String id) {
-    assert(id != null);
-    Binder binder = bindAs(id);
-    binder._isList = true;
-    binder.to(List);
-    return binder;
-  }
-  
-  /**
-   * Bind Map to [id].
-   */
-  Binder bindAsMap(String id) {
-    assert(id != null);
-    Binder binder = bindAs(id);
-    binder._isMap = true;
-    binder.to(Map);
-    return binder;
-  }
-  
-  /**
    * Check is [type] object definition exists in [Container].
    */
   bool isExists(Type type) {
