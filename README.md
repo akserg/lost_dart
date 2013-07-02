@@ -281,6 +281,37 @@ void main() {
 }
 </pre>
 
+###Batch binding
+
+To add an array of types in a Container you can use the bindAll method.
+
+<pre class="syntax brush-javascript">
+import 'package:lost_dart/lost_dart.dart';
+
+class Baz{
+}
+
+class Bar{
+}
+
+class Foo{
+}
+
+void main() {
+  Container container = new Container();
+
+  container.bindAll([
+    Baz,
+    Bar,
+    Foo
+  ]);
+
+  Foo foo = container.get(Foo);
+
+  assert(foo != null);
+}
+</pre>
+
 ###Multi injection
 
 Lost Dart allows you to inject multiple objects bound to a particular type or interface. There are Weapon interface, and two implementations, Sword and Dagger.
