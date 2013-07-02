@@ -82,7 +82,7 @@ void main() {
 
 ###Constructor injection: Dependencies
 
-A tree of dependencies are instantiated and injected using the constructor argument or property:
+A tree of dependencies are instantiated and injected using the constructor argument:
 
 <pre class="syntax brush-javascript">
 import 'package:lost_dart/lost_dart.dart';
@@ -193,7 +193,8 @@ void main() {
   // Test result
   assert(bar.baz != null);
   assert(bar.baz.name == "99");
-}</pre>
+}
+</pre>
 
 ###Factory methods
 
@@ -255,8 +256,8 @@ void main() {
 
 ###Multi injection
 
-Lost Dart allows you to inject multiple objects bound to a particular type or interface. There are <pre class="syntax brush-javascript">Weapon interface</pre>, and two implementations, <pre class="syntax brush-javascript">Sword</pre> and <pre class="syntax brush-javascript">Dagger</pre>.
-The constructor of <pre class="syntax brush-javascript">Samurai</pre> class takes an array of <pre class="syntax brush-javascript">Weapon</pre>. Use <pre class="syntax brush-javascript">bindAsList</pre> method of <pre class="syntax brush-javascript">Container</pre> and specify you items here.
+Lost Dart allows you to inject multiple objects bound to a particular type or interface. There are Weapon interface, and two implementations, Sword and Dagger.
+The constructor of Samurai class takes an array of Weapon. Use bindAsList method of Container and specify you items here.
 
 <pre class="syntax brush-javascript">
 import 'package:lost_dart/lost_dart.dart';
