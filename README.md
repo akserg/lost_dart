@@ -1,4 +1,4 @@
-﻿##Lost Dart
+##Lost Dart
 
 Lost Dart is lightweight dependency injection framework for Dart client and server applications.
 
