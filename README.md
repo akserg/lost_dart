@@ -1,4 +1,4 @@
-##Lost Dart
+ï»¿##Lost Dart
 
 Lost Dart is lightweight dependency injection framework for Dart client and server applications.
 
@@ -19,7 +19,7 @@ dependencies:
   lost_dart: any
 </pre> 
 
-Then run pub install and you’ll have everything you need to get started.
+Then run pub install and you will have everything you need to get started.
 
 ##The core concepts of Lost Dart by examples
 
