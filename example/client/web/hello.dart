@@ -3,7 +3,6 @@
 
 library hello;
 
-import 'dart:html';
 import 'package:lost_dart/lost_dart.dart';
 
 void main() {
