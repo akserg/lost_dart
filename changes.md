@@ -1,6 +1,10 @@
 Lost Dart Changes
 ==============
 
+** October 9, 2013
+
+** Migrate project code to follow Dart SDK version 0.8.1.2_r28355.
+
 ** October 5, 2013
 
 * Migrate project code to follow Dart SDK version 0.7.6.4_r28108.
