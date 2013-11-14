@@ -13,11 +13,11 @@ It helps you split your application into a collection of loosely-coupled pieces 
 ###Set up
 Lost Dart is available under the lost_dart pub package. Simply add a dependency to your pubspec.yaml file:
 
-<pre class="syntax brush-javascript">
+```
 ...
 dependencies:
   lost_dart: any
-</pre> 
+``` 
 
 Then run pub install and you will have everything you need to get started.
 
@@ -27,7 +27,7 @@ Then run pub install and you will have everything you need to get started.
 
 A simple example of using the Lost Dart is that to construct an instance of an object. 
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 // Class Baz
@@ -52,13 +52,13 @@ void main() {
   assert(baz.name == "");
   assert(baz2.name == "");
 }
-</pre>
+```
 
 ###Constructor injection: Constant arguments
 
 Constant values are set an constructor argument:
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 // Class Baz
@@ -84,13 +84,13 @@ void main() {
   assert(baz.name == "Test");
   assert(baz2.name == "Test2");
 }
-</pre>
+```
 
 ###Constructor injection: Dependencies
 
 A tree of dependencies are instantiated and injected using the constructor argument:
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 // application code
@@ -126,13 +126,13 @@ void main() {
   assert(bar2.baz.name == "99");
   assert(bar.baz == bar.baz);
 }
-</pre>
+```
 
 ###Property injection: Constant values
 
 Constant values are set in the property:
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 // application code
@@ -159,13 +159,13 @@ void main() {
   assert(baz.number == 33);
   assert(baz2.number == 44);
 }
-</pre>
+```
 
 ###Property injection: Dependencies
 
 A tree of dependencies are instantiated and injected using the property:
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 // application code
@@ -200,13 +200,13 @@ void main() {
   // Test result
   assert(bar.baz.name == bar2.baz.name);
 }
-</pre>
+```
 
 ###Factory methods
 
 The Factory methods have maximum flexibility to generate any type of injected values
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 //application code
@@ -256,13 +256,13 @@ void main() {
   assert(manager.network.uri == "http://127.0.0.1");
   assert(manager.user.name == "Admin");
 }
-</pre>
+```
 
 ###Object scopes
 
 Lost Dart supports two scopes: singleton and prototype. The first is used by default and does not need to be explicitly specified in binding.
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 //application code
@@ -282,13 +282,13 @@ void main() {
   // Test prototype result
   assert(baz != baz1);
 }
-</pre>
+```
 
 ###Batch binding
 
 To add an array of types in a Container you can use the bindAll method.
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 class Baz{
@@ -313,14 +313,14 @@ void main() {
 
   assert(foo != null);
 }
-</pre>
+```
 
 ###Multi injection
 
 Lost Dart allows you to inject multiple objects bound to a particular type or interface. There are Weapon interface, and two implementations, Sword and Dagger.
 The constructor of Samurai class takes an array of Weapon. The toFactory method of Binder return the list of Weapons to be used in Samurai constructor.
 
-<pre class="syntax brush-javascript">
+```
 import 'package:lost_dart/lost_dart.dart';
 
 /**
@@ -404,4 +404,4 @@ void main() {
   // Atack
   samurai.Attack("your enemy");
 }
-</pre>
+```
