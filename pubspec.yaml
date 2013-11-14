@@ -1,9 +1,9 @@
 name: lost_dart
-version: 1.0.0
+version: 1.0.1
 author: Sergey Akopkokhyants <akserg@gmail.com>
 description: Lost Dart is Inversion of Control Container implementation for Dart.
 homepage: http://www.lostdart.com
 environment:
-  sdk: '>=0.8.10+10 <2.0.0'
+  sdk: '>=1.0.0+3 <2.0.0'
 dev_dependencies:
   unittest: '>=0.9.0 <2.0.0'
