@@ -43,6 +43,7 @@ class Binder<T> {
   Binder named(String id) {
     assert(id != null);
     _container._changeId(this._id, id);
+    return this;
   }
   
   //*********

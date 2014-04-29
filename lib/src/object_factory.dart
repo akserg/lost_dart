@@ -45,14 +45,11 @@ class ObjectFactory {
       dynamic propValue = null;
       Argument arg = props[name];
       if (arg is TypeArgument) {
-        //result.add(container.getType((arg as TypeArgument).value));
-        propValue = container.get((arg as TypeArgument).value);
+        propValue = container.get(arg.value);
       } else if (arg is RefArgument) {
-        //result.add(container.get((arg as RefArgument).value));
-        propValue = container.getAs((arg as RefArgument).value);
+        propValue = container.getAs(arg.value);
       } else if (arg is ConstArgument) {
-        //result.add((arg as ConstArgument).value);
-        propValue = (arg as ConstArgument).value;
+        propValue = arg.value;
       } else {
         throw new UnsupportArgumentTypeException(arg);
       }
