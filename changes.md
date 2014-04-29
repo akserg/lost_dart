@@ -6,6 +6,10 @@ Lost Dart Changes
 * Migrate project code to follow Dart SDK version 1.3.3.
 * Fixed error when Binder does not return his instance in method named.
 
+** December 14, 2013
+
+* Migrate project code to follow Dart SDK version 1.0.0.10_r30798.
+
 ** November 14, 2013
 
 * Migrate project code to follow Dart SDK version 1.0.0.3_r30188.
