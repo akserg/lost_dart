@@ -1,17 +1,19 @@
 ##Lost Dart
 
-Lost Dart is lightweight dependency injection framework for Dart client and server applications.
+**Lost Dart** is lightweight dependency injection framework for Dart client and server applications.
 
 [![](https://drone.io/akserg/lost_dart/status.png)](https://drone.io/akserg/lost_dart/latest)
 
 It helps you split your application into a collection of loosely-coupled pieces and then glue them back together in a flexible manner. Its aim is to make wide range of Dart applications easier to:
+
 * Manage source code;
 * Encouraging code modularisation;
 * Separations of concerns;
 * Good unit testing practices.
 
 ###Set up
-Lost Dart is available under the lost_dart pub package. Simply add a dependency to your pubspec.yaml file:
+
+Lost Dart is available under the `lost_dart` pub package. Simply add a dependency to your `pubspec.yaml` file:
 
 ```
 ...
@@ -19,7 +21,7 @@ dependencies:
   lost_dart: any
 ``` 
 
-Then run pub install and you will have everything you need to get started.
+Then run `pub install` and you will have everything you need to get started.
 
 ##The core concepts of Lost Dart by examples
 
@@ -33,26 +35,65 @@ import 'package:lost_dart/lost_dart.dart';
 // Class Baz
 class Baz{
   String name;
-  
+
   Baz([this.name = ""]);
 }
 
 void main() {
   // Create container
   Container container = new Container();
-  
+
   // Bind Baz
   container.bind(Baz);
-  container.bindAs("baz2");
-  
+  container.bindAs("baz2").to(Baz);
+
   // Resolve baz by type
   Baz baz = container.get(Baz);
-  Baz baz2 = container.getAs("baz");
+  Baz baz2 = container.getAs("baz2");
 
   assert(baz.name == "");
   assert(baz2.name == "");
 }
 ```
+
+###Inheritance
+
+You may get an instance of an interface via implementation class.
+
+```
+import 'package:lost_dart/lost_dart.dart';
+
+// Class Baz
+abstract class Baz {
+  Baz(String name);
+  
+  String doBaz(int baz);
+}
+
+class Bar implements Baz {
+  String name;
+  
+  Bar(this.name);
+  
+  String doBaz(int baz) {
+    return name += ' ' + baz.toString();
+  }
+}
+
+void main() {
+  // Create container
+  Container container = new Container();
+
+  // Bind Baz
+  container.bind(Baz).to(Bar).addConstructorConstArg('Baz');
+
+  // Resolve baz by type
+  Baz baz = container.get(Baz);
+
+  assert(baz.doBaz(1) == "Baz 1");
+}
+```
+
 
 ###Constructor injection: Constant arguments
 
@@ -186,12 +227,12 @@ void main() {
   // Create IoC container
   Container container = new Container();
 
-  // Bind Bar
-  container.bind(Bar).setTypeProperty("baz", Bar);
-  container.bindAs("bar2").to(Bar).setTypeProperty("baz", Bar);
-
   // Bind Baz
   container.bind(Baz);
+
+  // Bind Bar
+  container.bind(Bar).setTypeProperty("baz", Baz);
+  container.bindAs("bar2").to(Bar).setTypeProperty("baz", Baz);
 
   // Resolve bar
   Bar bar = container.get(Bar);
@@ -204,7 +245,7 @@ void main() {
 
 ###Factory methods
 
-The Factory methods have maximum flexibility to generate any type of injected values
+The Factory methods have maximum flexibility to generate any type of injected values.
 
 ```
 import 'package:lost_dart/lost_dart.dart';
@@ -260,7 +301,8 @@ void main() {
 
 ###Object scopes
 
-Lost Dart supports two scopes: singleton and prototype. The first is used by default and does not need to be explicitly specified in binding.
+Lost Dart supports two scopes: `singleton` and `prototype`. The first is used by default and does not need to be explicitly specified in binding.
+You may mark an object definition as `prototype` with method `asPrototype` and `Container` will return a new instance of prototype on each call of method `get`.
 
 ```
 import 'package:lost_dart/lost_dart.dart';
@@ -286,7 +328,7 @@ void main() {
 
 ###Batch binding
 
-To add an array of types in a Container you can use the bindAll method.
+To add an array of types in a `Container` you can use the `bindAll` method.
 
 ```
 import 'package:lost_dart/lost_dart.dart';
@@ -318,7 +360,7 @@ void main() {
 ###Multi injection
 
 Lost Dart allows you to inject multiple objects bound to a particular type or interface. There are Weapon interface, and two implementations, Sword and Dagger.
-The constructor of Samurai class takes an array of Weapon. The toFactory method of Binder return the list of Weapons to be used in Samurai constructor.
+The constructor of Samurai class takes an array of Weapon. The toFactory method of Binder returns the list of Weapons to be used in Samurai constructor.
 
 ```
 import 'package:lost_dart/lost_dart.dart';
